@@ -52,11 +52,11 @@ async function cargarDatos (
   .then((resp) => resp.json())
   .then(function(info) {
 
-    console.log("New");
+    //console.log("New");
     data = fng.obtenerData(info);
     listData = [];
     listData = Object.assign(fng.obtenerData(info));
-    console.log(data);
+    //console.log(data);
     if (buscar) {
       setListaDatos(data);
     }
