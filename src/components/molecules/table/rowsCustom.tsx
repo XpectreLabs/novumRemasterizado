@@ -150,6 +150,7 @@ export const RowsCustom = ({
                   <TableCell align="left">
                     {data.state == "Cobrado" ? (
                       <ModalTB
+                        text                = {false}
                         ingreso             = {true}
                         eliminar            = {false}
                         cobradoPagado       = {true}
@@ -163,6 +164,7 @@ export const RowsCustom = ({
                       />
                     ) : (
                       <ModalTB
+                        text                = {false}
                         ingreso             = {true}
                         eliminar            = {false}
                         cobradoPagado       = {false}
@@ -181,6 +183,7 @@ export const RowsCustom = ({
                   <TableCell align="left" className="IcoEstados">
                     {data.state == "Pagado" ? (
                       <ModalTB
+                        text                = {false}
                         ingreso             = {false}
                         eliminar            = {false}
                         cobradoPagado       = {true}
@@ -194,6 +197,7 @@ export const RowsCustom = ({
                       />
                     ) : (
                       <ModalTB
+                        text                = {false}
                         ingreso             = {false}
                         eliminar            = {false}
                         cobradoPagado       = {false}
@@ -220,7 +224,7 @@ export const RowsCustom = ({
               </TableCell>
               <TableCell className="Iconos-Tabla" align="right">
                 {
-                  status
+                  status //if is true, it is a Ingreso, else if, it is a Egreso
                   ? (
                     <div className={Styles.btnSection}>
                       <ModalBank
@@ -239,6 +243,7 @@ export const RowsCustom = ({
                         setListaDatos       = {setListaDatos}
                       />
                       <ModalTB
+                        text                = {false}
                         ingreso             = {true}
                         eliminar            = {true}
                         cobradoPagado       = {false}
@@ -270,6 +275,7 @@ export const RowsCustom = ({
                         setListaDatos       = {setListaDatos}
                       />
                       <ModalTB
+                        text                = {false}
                         ingreso             = {false}
                         eliminar            = {true}
                         cobradoPagado       = {false}

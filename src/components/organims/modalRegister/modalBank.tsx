@@ -35,7 +35,7 @@ export const ModalBank = ({
   txtConcept:           boolean;
   txtCantidad:          boolean;
   inputsIngresoEgreso:  boolean;
-  text:                 string;
+  text:                 string | boolean;
   cargarDatos:          Function;
   edit:                 boolean;
   arrayData:            any;
@@ -155,12 +155,24 @@ export const ModalBank = ({
               </IconButton>
             )
             : edit
-              ?(<EditIcon
-                  onClick={() => {
-                    editar(rowId);
-                  }}
-                />
-              )
+              ? text
+                  ? (
+                    <Button
+                      variant = "text"
+                      classes = {{root: Styles.btnTxt}}
+                      onClick = {() => {
+                        editar(rowId);
+                      }}
+                    >
+                      Editar
+                    </Button>
+                  )
+                  : (<EditIcon
+                    onClick={() => {
+                      editar(rowId);
+                    }}
+                  />
+                )
               :(
                 <Box className={Styles.itemButton2}>
                   <Box className={Styles.btnText}>

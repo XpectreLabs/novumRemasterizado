@@ -67,6 +67,29 @@
   font-weight: bold !important;
 }
 
+/* DropdownButton.css */
+.dropdown {
+  display: inline-block;
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  margin-left: -40px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border: 1px solid #D9D9D9;
+  z-index: 1;
+}
+
+.dropdownContent a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+
 @media all and (min-width: 718px){
   .results{
     display: none;

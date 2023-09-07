@@ -10,10 +10,12 @@ import dayjs                      from 'dayjs';
 import fn                         from "../../../utility";
 import type { RangePickerProps }  from 'antd/es/date-picker';
 import DeleteIcon                 from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
 
 let fecha_creacion_o_m: string;
 
 export const ModalTB = ({
+  text,
   ingreso,
   eliminar,
   cobradoPagado,
@@ -25,6 +27,7 @@ export const ModalTB = ({
   setConfirm2Loading,
   cargarDatosEgresos,
 }:{
+  text:                 boolean;
   ingreso:              boolean;
   eliminar:             boolean;
   cobradoPagado:        boolean;
@@ -271,7 +274,19 @@ export const ModalTB = ({
     <Box>
       {
         eliminar
-          ? <DeleteIcon className="icoBorrar u-efecto slideRight" onClick={()=>{showModalE(id)}}/>
+          ? text
+              ? (
+                <Button
+                  variant = "text"
+                  classes = {{root: Scss.btnTxt}}
+                  onClick = {() => {
+                    showModalE(id)
+                  }}
+                >
+                  Eliminar
+                </Button>
+              )
+              : <DeleteIcon className="icoBorrar u-efecto slideRight" onClick={()=>{showModalE(id)}}/>
           : ingreso
             ? cobradoPagado
               ? (

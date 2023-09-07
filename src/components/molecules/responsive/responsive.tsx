@@ -5,19 +5,51 @@ import Chip           from "@mui/material/Chip";
 import MoneyOffIcon   from "@mui/icons-material/MoneyOff";
 import PriceCheckIcon from "@mui/icons-material/PriceCheck";
 import MoreVertIcon   from "@mui/icons-material/MoreVert";
+import Menu           from '@mui/material/Menu';
+import MenuItem       from '@mui/material/MenuItem';
+import { ModalBank }  from '../../organims/modalRegister';
+import { ModalTB }    from '../../organims/modalTable';
+import { useState }   from "react";
 
 export const ResponsiveDesing = ({
   listaDatos,
   ingreso,
+  setListaDatos,
+  cargarDatosIngresos,
+  cargarDatosEgresos,
+  confirm2Loading,
+  setConfirm2Loading,
 }: {
-  listaDatos: any;
-  ingreso:    boolean;
+  listaDatos:           any;
+  ingreso:              boolean;
+  setListaDatos:        any;
+  cargarDatosIngresos:  Function;
+  cargarDatosEgresos:   Function;
+  confirm2Loading:      any;
+  setConfirm2Loading:   Function;
 }) => {
   const formatNumber = (number: number | bigint) =>
     new Intl.NumberFormat("en-US", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(number);
+
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleDropdown = () => {
+      setIsOpen(!isOpen);
+    };
 
   return (
     <Box className={Styles.container}>
@@ -99,17 +131,89 @@ export const ResponsiveDesing = ({
           | undefined;
         statusCobro: boolean;
         date_created_o: any;
-      },
-      index: React.Key | null | undefined
-      ) => (
-        <Box        className = {Styles.results} key={index}>
+      }) => (
+        <Box        className = {Styles.results} key={item.id}>
           <Box      className = {Styles.conten}>
             <Box    className = {Styles.resultResponsive}>
-              <div  className = {Styles.btnEdit}>
-                <IconButton     aria-label  = "delete" size="small">
-                  <MoreVertIcon fontSize    = "small" />
-                </IconButton>
-              </div>
+              <Box  className = {Styles.btnEdit}>
+                <Box className={Styles.dropdown}>
+                  <IconButton     
+                    aria-label      = "Edition" 
+                    size            = "small"
+                    onClick         = {toggleDropdown}
+                  >
+                    <MoreVertIcon fontSize = "small" />
+                  </IconButton>
+                  {isOpen && (
+                    ingreso
+                      ? (
+                        <div className={Styles.dropdownContent}>
+                          <ModalBank
+                            namePerson          = {true}
+                            txtCantidad         = {false}
+                            inputsIngresoEgreso = {true}
+                            txtConcept          = {true}
+                            fechaPago           = {true}
+                            text                = {true}
+                            cargarDatos         = {cargarDatosIngresos}
+                            edit                = {true}
+                            arrayData           = {listaDatos}
+                            rowId               = {item.id}
+                            saveDataEgreso      = {false}
+                            editBank            = {false}
+                            setListaDatos       = {setListaDatos}
+                          /> 
+                          <ModalTB
+                            text                = {true}
+                            ingreso             = {true}
+                            eliminar            = {true}
+                            cobradoPagado       = {false}
+                            id                  = {item.id}
+                            date_created_o      = {item.date_created_o}
+                            cargarDatosIngresos = {cargarDatosIngresos}
+                            setListaDatos       = {setListaDatos}
+                            confirm2Loading     = {confirm2Loading}
+                            setConfirm2Loading  = {setConfirm2Loading}
+                            cargarDatosEgresos  = {cargarDatosEgresos}
+                          />
+                        </div>
+                      )
+                      : (
+                        <div className={Styles.dropdownContent}>
+                          <ModalBank
+                            namePerson          = {true}
+                            txtCantidad         = {false}
+                            inputsIngresoEgreso = {true}
+                            txtConcept          = {true}
+                            fechaPago           = {true}
+                            text                = {true}
+                            cargarDatos         = {cargarDatosEgresos}
+                            edit                = {true}
+                            arrayData           = {listaDatos}
+                            rowId               = {item.id}
+                            saveDataEgreso      = {true}
+                            editBank            = {false}
+                            setListaDatos       = {setListaDatos}
+                          />
+                          <ModalTB
+                            text                = {true}
+                            ingreso             = {false}
+                            eliminar            = {true}
+                            cobradoPagado       = {false}
+                            id                  = {item.id}
+                            date_created_o      = {item.date_created_o}
+                            cargarDatosIngresos = {cargarDatosIngresos}
+                            setListaDatos       = {setListaDatos}
+                            confirm2Loading     = {confirm2Loading}
+                            setConfirm2Loading  = {setConfirm2Loading}
+                            cargarDatosEgresos  = {cargarDatosEgresos}
+                          />
+                        </div>
+                      )
+                    
+                  )}
+                </Box>
+              </Box>
               <Box  className = {Styles.columnas}>
                 <li>Fecha de creación:      </li>
                 <li>Persona o empresa:      </li>

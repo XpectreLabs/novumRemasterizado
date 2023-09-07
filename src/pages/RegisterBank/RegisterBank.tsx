@@ -160,21 +160,23 @@ return (
         </Button>
       </Box>
 
-      <ModalBank
-        namePerson          = {false}
-        txtCantidad         = {true}
-        inputsIngresoEgreso = {false}
-        txtConcept          = {false}
-        fechaPago           = {false}
-        text                = {'Crear nueva cuenta'}
-        cargarDatos         = {cargarDatos}
-        edit                = {false} 
-        arrayData           = {null}
-        rowId               = {null}
-        saveDataEgreso      = {false}
-        editBank            = {false}
-        setListaDatos       = {setListaDatos}
-      />
+      <div className={Styles.btn}>
+        <ModalBank
+          namePerson          = {false}
+          txtCantidad         = {true}
+          inputsIngresoEgreso = {false}
+          txtConcept          = {false}
+          fechaPago           = {false}
+          text                = {'Crear nueva cuenta'}
+          cargarDatos         = {cargarDatos}
+          edit                = {false} 
+          arrayData           = {null}
+          rowId               = {null}
+          saveDataEgreso      = {false}
+          editBank            = {false}
+          setListaDatos       = {setListaDatos}
+        />
+      </div>
     </Box>
 
     <DataBank 
