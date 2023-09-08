@@ -84,6 +84,11 @@
 
 .TablaResumen {
   padding-top: 60px;
+  margin-left: 100px;
+
+  div{
+    gap: 60px;
+  }
 }
 
 .TitleColResumen {
@@ -118,59 +123,33 @@
   transition: all 300ms ease-out;
 }
 
-/*
-.ModalForm input {
-  font: 14px 'Readex Pro', sans-serif;
-  margin-bottom: 6px;
-  box-sizing: border-box;
-  padding: 4px 11px;
-  color: rgba(0, 0, 0, 0.88);
-  font-size: 14px;
-  line-height: 1.5714285714285714;
-  width: 100%;
-  background: #ffffff;
-  border: 1px solid #d9d9d9;
-  border-radius: 6px;
-  transition: all 0.2s; 
+@media all and (max-width: 1300px){
+  .TablaResumen {
+    margin-left: 50px;
+  }
 }
 
-.ModalFormText {
-  width: 100%;
-  height: 26px;
-  font: 14px 'Readex Pro', sans-serif;
-  box-sizing: border-box;
-  padding: 4px 11px;
-  color: rgba(0, 0, 0, 0.88);
-  line-height: 1.5714285714285714;
-  background: #ffffff;
-  border: 1px solid #d9d9d9;
-  border-radius: 6px;
-  transition: all 0.2s;
+@media all and (max-width: 1250px){
+  .TablaResumen {
+    margin-left: 0px;
+  }
 }
 
-.ModalSelect {
-  width: 232px;
-  height: 32px;
-  color: #000000;
-  padding-left: 8px;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  margin-bottom: 6px;
-  margin-right: 8px;
+@media all and (max-width: 1200px){
+  .TablaResumen div{
+    gap: 10px;
+    width: 100%;
+  }
 }
 
-.ModalCantidad {
-  width: 232px;
-  height: 33px;
-  color: #000000;
+@media all and (max-width: 750px){
+  .TablaResumen {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0px;
+  
+    div{
+      gap: 20px;
+    }
+  }
 }
-
-.ModalCantidadMr {
-  margin-right: 8px !important;
-}
-
-.ModalCantidad input {
-  height: 10px !important;
-  padding-top: 6px !important;
-}
-*/
