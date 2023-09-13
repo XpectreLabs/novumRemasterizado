@@ -3,9 +3,11 @@ import { Default } from "../components/organims/ingresos/Default";
 import { Ingresos } from "../pages/registroIngreso";
 
 export const RegistrarIngresosFuturos = ({
-  cambioRegistroBan,
+  ingresoActive, 
+  setIngresoActive,
 }: {
-  cambioRegistroBan: any;
+  ingresoActive: any;
+  setIngresoActive: any;
 }) => {
   const [status, setStatus] = useState(true);
 
@@ -17,7 +19,7 @@ export const RegistrarIngresosFuturos = ({
     if (props.ban) {
       return <Ingresos />;
     } else {
-      return <Default cambioRegistroBan={cambioRegistroBan} cambioTable={cambioTable} />;
+      return <Default cambioTable={cambioTable} />;
     }
   };
 

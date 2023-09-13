@@ -19,6 +19,13 @@ interface IData {
   Cantidad: string;
 }
 
+interface IDataSaldo {
+  nombre: string;
+  tipo: string;
+  cantidad: string;
+  total: number;
+}
+
 let listData: IData[];
 let data: any;
 const user_id = localStorage.getItem('user_id');
@@ -51,12 +58,19 @@ async function cargarDatos (
   })
   .then((resp) => resp.json())
   .then(function(info) {
-
-    //console.log("New");
     data = fng.obtenerData(info);
     listData = [];
     listData = Object.assign(fng.obtenerData(info));
     //console.log(data);
+    info['dataCajasBancos'].pop()
+    //setListSaldo(info['dataCajasBancos']);
+
+    let saldTot=0;
+    for(let j=0; j<info['dataCajasBancos'].length; j++) {
+      saldTot += parseInt(info['dataCajasBancos'][j]['total'].slice(0,-3).replace('$','').replace(',',''))
+    }
+    //setSaldoTotal(saldTot);
+
     if (buscar) {
       setListaDatos(data);
     }
@@ -88,6 +102,8 @@ export const TableRegistrarCajaOBanco = () => {
 const [cargandoVisible, setCargandoVisible] = useState(true);   
 const [cantidadV,       setCantidadV]       = useState<number>(0);
 const [listaDatos,      setListaDatos]      = useState([]);
+const [listSaldo,       setListSaldo]       = useState([]);
+const [saldoTotal,      setSaldoTotal]      = useState(-1);
 
 let idSI = setInterval(() => {
   if (!data) console.log("Vacio");
@@ -159,31 +175,58 @@ return (
           Exportar a excel
         </Button>
       </Box>
-
-      <div className={Styles.btn}>
-        <ModalBank
-          namePerson          = {false}
-          txtCantidad         = {true}
-          inputsIngresoEgreso = {false}
-          txtConcept          = {false}
-          fechaPago           = {false}
-          text                = {'Crear nueva cuenta'}
-          cargarDatos         = {cargarDatos}
-          edit                = {false} 
-          arrayData           = {null}
-          rowId               = {null}
-          saveDataEgreso      = {false}
-          editBank            = {false}
-          setListaDatos       = {setListaDatos}
-        />
-      </div>
     </Box>
 
+    <div className={Styles.btn}>
+      <ModalBank
+        namePerson          = {false}
+        txtCantidad         = {true}
+        inputsIngresoEgreso = {false}
+        txtConcept          = {false}
+        fechaPago           = {false}
+        text                = {'Crear nueva cuenta'}
+        cargarDatos         = {cargarDatos}
+        edit                = {false} 
+        arrayData           = {null}
+        rowId               = {null}
+        saveDataEgreso      = {false}
+        editBank            = {false}
+        setListaDatos       = {setListaDatos}
+      />
+    </div>
+
+    <Box className={Styles.nav2}>
+      {listSaldo.map((saldo: IDataSaldo) => (
+        <Box>
+          <p>
+            <strong className={Styles.TitleSaldo}>
+              Saldo en {saldo.tipo}:
+            </strong>{" "}
+            <span className={Styles.Saldo}>{saldo.total}</span>
+          </p>
+        </Box>
+      ))}
+      {saldoTotal != -1 ? (
+        <Box className="u-textRight">
+          <p>
+            <strong className={Styles.TitleSaldo}>
+              Saldo total en las cuentas:
+            </strong>{" "}
+            <span className={Styles.Saldo}>
+              ${fn.formatNumber(saldoTotal)}
+            </span>
+          </p>
+        </Box>
+      ) : null}
+    </Box>
+
+    <Box sx={{marginTop: '40px'}}>
     <DataBank 
       arrays        = {listaDatos} 
       setListaDatos = {setListaDatos} 
       cargarDatos   = {cargarDatos}
     />
+    </Box>
 
     <Box
       className = {cargandoVisible ? "u-textCenter" : "u-textCenter u-ocultar"}

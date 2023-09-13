@@ -106,6 +106,8 @@ export const NavBar = ({
                 : 'No Pagados'
             } 
           </option>
+          <option value="3">Atrasados</option>
+          <option value="4">Cancelados</option>
         </select>
       </Box>
 

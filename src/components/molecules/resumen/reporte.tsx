@@ -64,9 +64,9 @@ function cargarDatos(
   })
     .then((resp) => resp.json())
     .then(function (info) {
-      console.log     ("Data:");
-      console.log     (info);
-      console.log     (info["dataCajasBancos"]);
+      //console.log     ("Data:");
+      //console.log     (info);
+      //console.log     (info["dataCajasBancos"]);
       setListCajaBanco(info["dataCajasBancos"]);
     })
     .catch((error) => {
@@ -84,9 +84,9 @@ function cargarDatos(
   })
     .then((resp) => resp.json())
     .then(function (info) {
-      console.log     ("Data 2:");
-      console.log     (info);
-      console.log     (info["dataIngresosFuturos"]);
+      //console.log     ("Data 2:");
+      //console.log     (info);
+      //console.log     (info["dataIngresosFuturos"]);
       setListIngresos (info["dataIngresosFuturos"]);
     })
     .catch((error) => {
@@ -104,9 +104,9 @@ function cargarDatos(
   })
     .then((resp) => resp.json())
     .then(function (info) {
-      console.log   ("Data 2:");
-      console.log   (info);
-      console.log   (info["dataEgresosFuturos"]);
+      //console.log   ("Data 2:");
+      //console.log   (info);
+      //console.log   (info["dataEgresosFuturos"]);
       setListEgresos(info["dataEgresosFuturos"]);
     })
     .catch((error) => {
@@ -131,7 +131,7 @@ export const Reporte = () => {
     <>
       <div      className = {style.TablaResumen}>
         <Row>
-          <Col>
+          <Col className = {style.colTabla}>
             <h2 className = {style.TitleColResumen}>
               <strong>Caja o banco</strong>
             </h2>
@@ -142,7 +142,7 @@ export const Reporte = () => {
             />
           </Col>
 
-          <Col>
+          <Col className = {style.colTabla2}>
             <h2 className = {style.TitleColResumen}>
               <strong>Ingresos futuros</strong>
             </h2>
@@ -153,7 +153,7 @@ export const Reporte = () => {
             />
           </Col>
 
-          <Col>
+          <Col className = {style.colTabla3}>
             <h2 className = {style.TitleColResumen}>
               <strong>Egresos futuros</strong>
             </h2>

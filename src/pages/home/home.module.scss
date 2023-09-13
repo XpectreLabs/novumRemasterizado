@@ -84,10 +84,10 @@
 
 .TablaResumen {
   padding-top: 60px;
-  margin-left: 100px;
+  margin-left: 10px;
 
   div{
-    gap: 60px;
+    gap: 40px;
   }
 }
 
@@ -124,21 +124,26 @@
 }
 
 @media all and (max-width: 1300px){
-  .TablaResumen {
-    margin-left: 50px;
-  }
-}
-
-@media all and (max-width: 1250px){
-  .TablaResumen {
-    margin-left: 0px;
-  }
-}
-
-@media all and (max-width: 1200px){
-  .TablaResumen div{
+  .TablaResumen div {
     gap: 10px;
+  }
+
+  .colTabla {
     width: 100%;
+  }
+
+  .colTabla2 {
+    width: 49%;
+  }
+
+  .colTabla3 {
+    width: 49%;
+  }
+}
+
+@media all and (max-width: 1000px){
+  .btnNavMobile {
+    display: none !important;
   }
 }
 
@@ -151,5 +156,21 @@
     div{
       gap: 20px;
     }
+  }
+  
+  .colTabla2 {
+    width: 100%;
+  }
+
+  .colTabla3 {
+    width: 100%;
+  }
+
+  .btnNav {
+    display: none !important;
+  }
+
+  .btnNavMobile {
+    display: block !important;
   }
 }

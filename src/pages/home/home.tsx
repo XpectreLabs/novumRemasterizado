@@ -17,8 +17,6 @@ import { RegistrarIngresosFuturos }             from "../../hooks/RegistrarIngre
 import { RegistrarEgresosFuturos }              from "../../hooks/RegistrarEgresos";
 import { CerrarSesion }                         from '../../cerrarSesion';
 
-
-
 const drawerWidth = 250;
 
 const { Header, Content, Sider } = Layout;
@@ -68,6 +66,9 @@ export const Home = (props: any) => {
   const [egresoActive,  setEgresoActive]  = React.useState(true);
   const [collapsed,     setCollapsed]     = useState(false);
   const [page,          setPage]          = useState("1");
+  const [resumenActive, setResumenActive] = React.useState(false);
+  const [cajaActive,    setCajaActive]    = React.useState(true);
+  const [ingresoActive, setIngresoActive] = React.useState(true);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -96,9 +97,9 @@ export const Home = (props: any) => {
     if (props.pos === "1") {
       return <Resumen                   cambioRegistroBan={cambioRegistroBan} />;
     } else if (props.pos === "2") {
-      return <RegistrarCajaOBanco       cambioRegistroBan={undefined} />;
+      return <RegistrarCajaOBanco cajaActive={cajaActive} setCajaActive={setCajaActive} />;
     } else if (props.pos === "3") {
-      return <RegistrarIngresosFuturos  cambioRegistroBan={undefined} />;
+      return <RegistrarIngresosFuturos ingresoActive={ingresoActive} setIngresoActive={setIngresoActive} />;
     } else if (props.pos === "4") {
       return (
         <RegistrarEgresosFuturos
@@ -142,8 +143,19 @@ export const Home = (props: any) => {
             <IconButton
               aria-label  = "open drawer"
               edge        = "start"
-              onClick     = {handleDrawerToggle}
+              onClick     = {toggleCollapsed}
+              classes={{root: style.btnNav}}
               sx={{ mr: 2, display: { sm: "block" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+
+            <IconButton
+              aria-label  = "open drawer"
+              edge        = "start"
+              onClick     = {handleDrawerToggle}
+              classes={{root: style.btnNavMobile}}
+              sx={{ mr: 2, display: { xs: "block", sm: "none" } }}
             >
               <MenuIcon />
             </IconButton>
@@ -159,8 +171,37 @@ export const Home = (props: any) => {
           <CerrarSesion iniciales={iniciales_usuario} />
         </Toolbar>
       </AppBar>
+
+      <Sider
+        className={style.btnNav}
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+      >
+        <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+          <span className={`${style.HomeLogo} icon-logo`}>
+            <span className="path1"></span>
+            <span className="path2"></span>
+            <span className="path3"></span>
+            <span className="path4"></span>
+            <span className="path5"></span>
+            <span className="path6"></span>
+          </span>
+          <Divider />
+          <Menu
+            className           = {style.prueba}
+            defaultSelectedKeys = {[page]}
+            selectedKeys        = {[page]}
+            mode                = "inline"
+            onClick             = {onClick}
+            items               = {items}
+          />
+        </Box>
+      </Sider>
+
       <Box component="nav">
         <Drawer
+          className={style.btnNavMobile}
           container   = {container}
           variant     = "temporary"
           open        = {mobileOpen}
@@ -169,7 +210,7 @@ export const Home = (props: any) => {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "block" },
+            display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width:      drawerWidth,
@@ -180,18 +221,9 @@ export const Home = (props: any) => {
         </Drawer>
       </Box>
 
-      <Layout>
-        <Header     style={{ padding: 0, background: colorBgContainer }}>
-          <Space    size={16} wrap>
-            <Avatar size={40} className={`${style.HomeUser} u-floatRight`}>
-              AP
-            </Avatar>
-          </Space>
-        </Header>
-        <Content    style={{ margin: "0 16px" }} className="u-textCenter">
-          <Cambio   pos={page} />
-        </Content>
-      </Layout>
+      <Content    style={{ margin: "50px 16px" }} className="u-textCenter">
+        <Cambio   pos={page} />
+      </Content>
     </Layout>
   );
 };
