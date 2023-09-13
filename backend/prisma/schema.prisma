@@ -1,7 +1,7 @@
 generator client {
   provider = "prisma-client-js"
 }
- 
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -57,6 +57,7 @@ model egresos_futuros {
   user_id                Int
   fecha_creacion         DateTime    @db.Date
   fecha_pago             DateTime?   @db.Date
+  borrado                Boolean
   activo                 Boolean
   categorias             categorias  @relation(fields: [categoria_id], references: [categoria_id], onUpdate: Restrict, map: "fk_categoria_id_egre")
   tipos_pagos            tipos_pagos @relation(fields: [tipo_pago_id], references: [tipo_pago_id], onUpdate: Restrict, map: "fk_tipo_pago_id_egre")
@@ -78,6 +79,7 @@ model ingresos_futuros {
   user_id                Int
   fecha_creacion         DateTime    @db.Date
   fecha_cobro            DateTime?   @db.Date
+  borrado                Boolean
   activo                 Boolean
   categorias             categorias  @relation(fields: [categoria_id], references: [categoria_id], onUpdate: Restrict, map: "fk_categoria_id_ing")
   tipos_pagos            tipos_pagos @relation(fields: [tipo_pago_id], references: [tipo_pago_id], onUpdate: Restrict, map: "fk_tipo_pago_id_ing")

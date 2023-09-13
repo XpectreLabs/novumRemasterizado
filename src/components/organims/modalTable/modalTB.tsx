@@ -10,10 +10,13 @@ import dayjs                      from 'dayjs';
 import fn                         from "../../../utility";
 import type { RangePickerProps }  from 'antd/es/date-picker';
 import DeleteIcon                 from '@mui/icons-material/Delete';
+import Button                     from '@mui/material/Button';
+import { CloseOutlined }          from '@mui/icons-material';
 
 let fecha_creacion_o_m: string;
 
 export const ModalTB = ({
+  text,
   ingreso,
   eliminar,
   cobradoPagado,
@@ -24,7 +27,9 @@ export const ModalTB = ({
   confirm2Loading,
   setConfirm2Loading,
   cargarDatosEgresos,
+  cancelar,
 }:{
+  text:                 boolean;
   ingreso:              boolean;
   eliminar:             boolean;
   cobradoPagado:        boolean;
@@ -35,11 +40,14 @@ export const ModalTB = ({
   confirm2Loading:      any;
   setConfirm2Loading:   any;
   cargarDatosEgresos:   Function;
+  cancelar:             boolean;
  
 }) => {
   const [modal2Open,              setModal2Open]              = useState(false);
   const [modal3Open,              setModal3Open]              = useState(false);
+  const [modal4Open,              setModal4Open]              = useState(false);
   const [confirm3Loading,         setConfirm3Loading]         = useState(false);
+  const [confirm4Loading,         setConfirm4Loading]         = useState(false);
   const [idIngresoStatus,         setIdIngresoStatus]         = useState("0");
   const [idEgresoStatus,          setIdEgresoStatus]          = useState("0");
   const [cobrado,                 setCobrado]                 = useState(false);
@@ -205,7 +213,7 @@ export const ModalTB = ({
     },500);
   };
 
-  const eliminarIngreso = (id: any) => {
+  const eliminarIngreso = () => {
     const scriptURL           = localStorage.getItem("site") + "/eliminarIngresoFuturo"; // deberia es
     const ingresos_futuros_id = idIngresoStatus;
     const dataU               = { ingresos_futuros_id };
@@ -267,58 +275,136 @@ export const ModalTB = ({
       alert("La fecha no puede ser mayor a la fecha de creación");
   };
 
+  /*##################################*/
+
+  const showModalCl = (id: any) => {
+    setModal4Open(true);
+    setTimeout(()=>{
+      setIdIngresoStatus(id);
+      setIdEgresoStatus(id);
+    },500);
+  };
+
+  const cancelarIngreso = () => {
+    const scriptURL           = localStorage.getItem('site')+"/CancelarIngresoFuturo"; // deberia es
+    const ingresos_futuros_id = idIngresoStatus;
+    const dataU               = {ingresos_futuros_id};
+
+    setConfirm4Loading(true);
+
+    fetch(scriptURL, {
+       method: 'POST',
+       body:    JSON.stringify(dataU),
+       headers:{
+         'Content-Type': 'application/json'
+       }
+     })
+    .then((resp) => resp.json())
+    .then(function(info) {
+      fn.ejecutarClick    ("#btnBuscar");
+      setModal4Open       (false);
+      setConfirm4Loading  (false);
+     })
+     .catch(error => {
+       console.log  (error.message);
+       console.error('Error!', error.message);
+     });
+  }
+
+  const cancelarEgreso = () => {
+    const scriptURL           = localStorage.getItem('site')+"/CancelarEgresoFuturo"; // deberia es
+    const egresos_futuros_id  = idEgresoStatus;
+    const dataU               = {egresos_futuros_id};
+
+    setConfirm4Loading(true);
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body:   JSON.stringify(dataU),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((resp) => resp.json())
+    .then(function(info) {
+      fn.ejecutarClick  ("#btnBuscar");
+      setModal4Open     (false);
+      setConfirm4Loading(false);
+    })
+    .catch(error => {
+      console.log   (error.message);
+      console.error ('Error!', error.message);
+    });
+  }
+
   return(
     <Box>
-      {
-        eliminar
-          ? <DeleteIcon className="icoBorrar u-efecto slideRight" onClick={()=>{showModalE(id)}}/>
-          : ingreso
-            ? cobradoPagado
-              ? (
-                <Chip
-                  icon        = {<span className="icon-icoCobrar"></span>}
-                  size        = "small"
-                  label       = "Cobrado"
-                  className   = {Styles.chipTable}
-                  onClick     = {() => {
-                    showModalC( id, 2, date_created_o )
-                  }}
-                />
-              )
-              : (
-                <Chip
-                  icon      = {<span className="icon-icoCobrarDismiss"></span>}
-                  label     = "No cobrado"
-                  size      = "small"
-                  className = {Styles.chipTableNo}
-                  onClick   = {() => {
-                    showModalC( id, 1, date_created_o );
-                  }}
-                />
-              )
-            : cobradoPagado 
-              ? (
-                <Chip
-                  icon        = {<span className="icon-icoCobrar"></span>}
-                  size        = "small"
-                  label       = "Pagado"
-                  className   = {Style.chipTable}
-                  onClick     = {() => {
-                    showModalP( id, 2, date_created_o )
-                  }}
-                />
-              )
-              : (
-                <Chip
-                  icon        = {<span className="icon-icoCobrarDismiss"></span>}
-                  label       = "No pagado"
-                  size        = "small"
-                  className   = {Style.chipTableNo}
-                  onClick     = {() => {
-                    showModalP( id, 1, date_created_o )
-                  }}
-                />
-              )
+      { cancelar
+          ? <CloseOutlined 
+              onClick={()=>{showModalCl(id)}} 
+              className="u-efecto slideRight u-marginR-5" 
+            />
+          : eliminar
+            ? text
+                ? (
+                  <Button
+                    variant = "text"
+                    classes = {{root: Scss.btnTxt}}
+                    onClick = {() => {
+                      showModalE(id)
+                    }}
+                  >
+                    Eliminar
+                  </Button>
+                )
+                : <DeleteIcon className="icoBorrar u-efecto slideRight" onClick={()=>{showModalE(id)}}/>
+            : ingreso
+              ? cobradoPagado
+                ? (
+                  <Chip
+                    icon        = {<span className="icon-icoCobrar"></span>}
+                    size        = "small"
+                    label       = "Cobrado"
+                    className   = {Styles.chipTable}
+                    onClick     = {() => {
+                      showModalC( id, 2, date_created_o )
+                    }}
+                  />
+                )
+                : (
+                  <Chip
+                    icon      = {<span className="icon-icoCobrarDismiss"></span>}
+                    label     = "No cobrado"
+                    size      = "small"
+                    className = {Styles.chipTableNo}
+                    onClick   = {() => {
+                      showModalC( id, 1, date_created_o );
+                    }}
+                  />
+                )
+              : cobradoPagado 
+                ? (
+                  <Chip
+                    icon        = {<span className="icon-icoCobrar"></span>}
+                    size        = "small"
+                    label       = "Pagado"
+                    className   = {Style.chipTable}
+                    onClick     = {() => {
+                      showModalP( id, 2, date_created_o )
+                    }}
+                  />
+                )
+                : (
+                  <Chip
+                    icon        = {<span className="icon-icoCobrarDismiss"></span>}
+                    label       = "No pagado"
+                    size        = "small"
+                    className   = {Style.chipTableNo}
+                    onClick     = {() => {
+                      showModalP( id, 1, date_created_o )
+                    }}
+                  />
+                )
       }
 
       <Modal
@@ -389,39 +475,41 @@ export const ModalTB = ({
             ingreso
               ? !cobrado
                   ? (
-                    <div className="u-textLeft">
-                      <p className={Styles.RadioFechaAnterior}><strong>Fecha en que se realizo el cobro:</strong></p>
+                    <div className  = "u-textLeft">
+                      <p className  = {Styles.RadioFechaAnterior}><strong>Fecha en que se realizo el cobro:</strong></p>
                       <div>
                         <input
-                          type="radio"
-                          name="rdRealizoCobro"
-                          id="rdRealizoCobro1"
-                          value="1"
-                          checked={ocultarFechaRealizo?true:false}
-                          onClick={()=>{setValueFechaRealizoCobro(''); setOcultarFechaRealizo(true);}}
+                          type    = "radio"
+                          name    = "rdRealizoCobro"
+                          id      = "rdRealizoCobro1"
+                          value   = "1"
+                          checked = {ocultarFechaRealizo?true:false}
+                          onClick = {()=>{setValueFechaRealizoCobro(''); setOcultarFechaRealizo(true);}}
                         />
                         <label className={Styles.ModalLabelRealizoCobro} htmlFor="rdRealizoCobro1"><strong>Hoy</strong></label>
                       </div>
                       <div className={Styles.RadioFechaAnterior}>
                         <input
-                          type="radio"
-                          name="rdRealizoCobro"
-                          id="rdRealizoCobro2"
-                          value="2"
-                          checked={ocultarFechaRealizo?false:true}
-                          onClick={()=>{setOcultarFechaRealizo(false);}}
+                          type    = "radio"
+                          name    = "rdRealizoCobro"
+                          id      = "rdRealizoCobro2"
+                          value   = "2"
+                          checked = {ocultarFechaRealizo?false:true}
+                          onClick = {()=>{setOcultarFechaRealizo(false);}}
                         />
                         <label className={Styles.ModalLabelRealizoCobro} htmlFor="rdRealizoCobro2"><strong>Fecha anterior</strong></label>
                       </div>
         
                       <DatePicker
-                        className={`${Styles.ModalCantidad} ${Styles.ModalRealizoCobro} ${ocultarFechaRealizo?'u-ocultar':null}`}
-                        id='txtFechaRealizoCobro'
-                        name='txtFechaRealizoCobro'
-                        placeholder='Fecha en que se realizo'
-                        value={valueFechaRealizoCobro}
-                        onChange={onChange2}
-                        disabledDate={disabledDate}
+                        className     = {
+                          `${Styles.ModalCantidad} ${Styles.ModalRealizoCobro} ${ocultarFechaRealizo?'u-ocultar':null}`
+                        }
+                        id            = 'txtFechaRealizoCobro'
+                        name          = 'txtFechaRealizoCobro'
+                        placeholder   = 'Fecha en que se realizo'
+                        value         = {valueFechaRealizoCobro}
+                        onChange      = {onChange2}
+                        disabledDate  = {disabledDate}
                       />
                     </div>
                   )
@@ -432,35 +520,35 @@ export const ModalTB = ({
                       <p className={Styles.RadioFechaAnterior}><strong>Fecha en que se realizo el pago:</strong></p>
                       <div>
                         <input
-                          type="radio"
-                          name="rdRealizoCobro"
-                          id="rdRealizoCobro1"
-                          value="1"
-                          checked={ocultarFechaRealizo?true:false}
-                          onClick={()=>{setValueFechaRealizoPago(''); setOcultarFechaRealizo(true);}}
+                          type    = "radio"
+                          name    = "rdRealizoCobro"
+                          id      = "rdRealizoCobro1"
+                          value   = "1"
+                          checked = {ocultarFechaRealizo?true:false}
+                          onClick = {()=>{setValueFechaRealizoPago(''); setOcultarFechaRealizo(true);}}
                         />
                         <label className={Styles.ModalLabelRealizoPago} htmlFor="rdRealizoCobro1"><strong>Hoy</strong></label>
                       </div>
                       <div className={Styles.RadioFechaAnterior}>
                         <input
-                          type="radio"
-                          name="rdRealizoCobro"
-                          id="rdRealizoCobro2"
-                          value="2"
-                          checked={ocultarFechaRealizo?false:true}
-                          onClick={()=>{setOcultarFechaRealizo(false);}}
+                          type    = "radio"
+                          name    = "rdRealizoCobro"
+                          id      = "rdRealizoCobro2"
+                          value   = "2"
+                          checked = {ocultarFechaRealizo?false:true}
+                          onClick = {()=>{setOcultarFechaRealizo(false);}}
                         />
                         <label className={Styles.ModalLabelRealizoPago} htmlFor="rdRealizoCobro2"><strong>Fecha anterior</strong></label>
                       </div>
 
                       <DatePicker
                         className={`${Styles.ModalCantidad} ${Styles.ModalRealizoPago} ${ocultarFechaRealizo?'u-ocultar':null}`}
-                        id='txtFechaRealizoCobro'
-                        name='txtFechaRealizoCobro'
-                        placeholder='Fecha en que se realizo'
-                        value={valueFechaRealizoPago}
-                        onChange={onChange2}
-                        disabledDate={disabledDate}
+                        id            = 'txtFechaRealizoCobro'
+                        name          = 'txtFechaRealizoCobro'
+                        placeholder   = 'Fecha en que se realizo'
+                        value         = {valueFechaRealizoPago}
+                        onChange      = {onChange2}
+                        disabledDate  = {disabledDate}
                       />
                     </div>
                   )
@@ -470,30 +558,60 @@ export const ModalTB = ({
       </Modal>
 
       <Modal
-        width={340}
-        title=""
+        width         = {340}
+        title         = ""
         centered
-        open={modal3Open}
-        onOk={ingreso ? eliminarIngreso : eliminarEgreso}
-        onCancel={() => setModal3Open(false)}
-        okText={"Eliminar"}
-        cancelText="Cancelar"
-        className={`${Styles.ModalCobrar} u-textCenter`}
-        confirmLoading={confirm3Loading}
+        open          = {modal3Open}
+        onOk          = {ingreso ? eliminarIngreso : eliminarEgreso}
+        onCancel      = {() => setModal3Open(false)}
+        okText        = {"Eliminar"}
+        cancelText    = "Cancelar"
+        className     = {`${Styles.ModalCobrar} u-textCenter`}
+        confirmLoading= {confirm3Loading}
       >
         <form
-          className={Styles.ModalForm}
-          name="formEliminar"
-          id="formEliminar"
-          method="post"
+          className = {Styles.ModalForm}
+          name      = "formEliminar"
+          id        = "formEliminar"
+          method    = "post"
         >
           {
             ingreso
-              ? <input type="hidden" name="idIngresoFuturoE" id="idIngresoFuturoE" value={idIngresoStatus} />
-              : <input type="hidden" name="idEgresoFuturoE" id="idEgresoFuturoE" value={idEgresoStatus} />
+              ? <input type="hidden" name="idIngresoFuturoE"  id="idIngresoFuturoE" value={idIngresoStatus} />
+              : <input type="hidden" name="idEgresoFuturoE"   id="idEgresoFuturoE"  value={idEgresoStatus} />
           }
           
           <p><strong>¿Desea eliminar este registro de cobro?</strong></p>
+        </form>
+      </Modal>
+
+      <Modal
+        width           = {340}
+        title           = ""
+        centered
+        open            = {modal4Open}
+        onOk            = {ingreso ? cancelarIngreso : cancelarEgreso}
+        onCancel        = {() => setModal4Open(false)}
+        okText          = {ingreso ? "Cancelar ingreso" : "Cancelar egreso"}
+        cancelText      = "Salir"
+        className       = {`${Styles.ModalCobrar} Cobrado u-textCenter`}
+        confirmLoading  = {confirm4Loading}
+      >
+        <form
+          className={Styles.ModalForm}
+          name    = "formCancelar"
+          id      = "formCancelar"
+          method  = "post"
+        >
+          <input type="hidden" name="idIngresoFuturoE"  id="idIngresoFuturoE" value={idIngresoStatus} />
+          <input type="hidden" name="idEgresoFuturoE"   id="idEgresoFuturoE"  value={idEgresoStatus} />
+          <p>
+            {
+              ingreso
+                ? <strong>¿Desea cancelar este cobro? </strong>
+                : <strong>¿Desea cancelar este pago?  </strong>
+            }
+          </p>
         </form>
       </Modal>
 

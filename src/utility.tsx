@@ -78,7 +78,14 @@ const buscarPosicionArreglo = (arrray: Array<any>, id: number): number => {
   return pos;
 };
 
+const formatNumber = (number: number | bigint | any) =>
+  new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(number);
+
 export default {
+  formatNumber,
   obtenerValor,
   obtenerValorText,
   obtenerValorRadio,

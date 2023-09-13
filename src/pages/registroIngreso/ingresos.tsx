@@ -205,7 +205,15 @@ return (
       cargarDatosEgresos  = {()=>{}}
     />
 
-    <ResponsiveDesing listaDatos = {listaDatos} ingreso = {true}/>
+    <ResponsiveDesing 
+      listaDatos          = {listaDatos} 
+      ingreso             = {true}
+      setListaDatos       = {setListaDatos}
+      cargarDatosIngresos = {cargarDatosIngresos}
+      cargarDatosEgresos  = {()=>{}}
+      confirm2Loading     = {confirm2Loading}
+      setConfirm2Loading  = {setConfirm2Loading}
+    />
    
     <Box
       className = {cargandoVisible ? "u-textCenter" : "u-textCenter u-ocultar"}

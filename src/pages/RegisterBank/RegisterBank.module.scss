@@ -1,12 +1,5 @@
 @import "../../sass/variables";
 
-.nav{
-  display: flex;
-  justify-content: space-between;
-  margin: 15px 15px 20px 15px;
-  align-items: baseline;
-}
-
 .btnCreateAccount{
   font-size: 11px !important;
   font-weight: 600 !important;
@@ -14,12 +7,6 @@
   border-radius: 10px !important;
   text-transform: full-size-kana !important;
   padding: 5px 14px !important;
-}
-
-
-.counter{
-  display: flex;
-  gap: 10px;
 }
 
 .counter p{
@@ -84,24 +71,64 @@
   border-radius: 10px;
 }
 
-@media all and (min-width: 718px){
- .itemSearch{
-    width: 400px;
+.TitleSaldo {
+  /*color: #fff;
+  background: #00C62F;*/
+  background: #f0f0f0;
+  padding: 4px 6px;
+}
+
+.Saldo {
+  background: #d9ffe2;
+  padding: 4px 6px;
+}
+
+.nav{
+  display: flex;
+  margin: 15px 15px 20px 15px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.counter{
+  display: flex;
+  gap: 10px;
+  order: 1;
+}
+
+.itemSearch{
+  order: 2;
+  width: 55%;
+  margin: 0px 10px 0px 10px;
+}
+
+.itemButton{
+  order: 3;
+}
+
+.btn{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -15px;
+  margin-left: -12px;
+  width: 100%;
+}
+
+
+@media all and (max-width: 1100px){
+  .btn{
+    margin-left: -32px;
   }
 }
 
-@media all and (max-width: 717px){
-  .nav{
-    flex-direction: column; 
-  }
-
-  .counter{
-    order: 1;
+@media all and (max-width: 600px){
+  .counter {
+    width: 30%;
   }
 
   .itemSearch{
-    order: 3;
-    width: 100%;
-    margin-top: 10px;
+    position: absolute;
+    margin-top: 50px;
+    width: -moz-available;
   }
 }

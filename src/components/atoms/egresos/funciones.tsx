@@ -14,6 +14,15 @@ function obtenerList(info: any) {
     );
     const state = fechaEnQueSePago === "Pendiente" ? "No pagado" : "Pagado";
     let validarPago;
+    let validarRetraso = false;
+    let textRetraso = "";
+
+    if (fechaEnQueSePago === "Pendiente") {
+      validarRetraso =
+        Date.parse(new Date().toISOString()) >
+        Date.parse(info["listEgresosFuturos"][j]["fecha_tentativa_pago"]);
+      textRetraso = validarRetraso ? " (Atrasado)" : "";
+    }
 
     if (fechaEnQueSePago !== "Pendiente") {
       validarPago =
@@ -33,9 +42,11 @@ function obtenerList(info: any) {
       amount:             info["listEgresosFuturos"][j]["monto"],
       date_to_pay:        fechaPago,
       date_to_pay_o:      fn.obtenerFecha(info["listEgresosFuturos"][j]["fecha_tentativa_pago"]),
-      state:              state,
-      date_cashed:        fechaEnQueSePago,
-      statusCobro:        validarPago,
+      state: state,
+      date_cashed: fechaEnQueSePago,
+      statusCobro: validarPago,
+      textRetraso: textRetraso,
+      statusBorrado: info["listEgresosFuturos"][j]["borrado"],
     };
     listData.push(item);
   }

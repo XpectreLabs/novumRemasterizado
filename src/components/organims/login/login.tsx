@@ -4,6 +4,7 @@ import { Input, message } from "antd";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const Login = () => {
   const obtenerValor = (input: any) => {
@@ -23,70 +24,75 @@ export const Login = () => {
           .email("El email es incorrecto")
           .required("El email es requerido"),
 
-        password: Yup.string().required("La contraseña es requerida"),
+        password: Yup.string()
+        .required("La contraseña es requerida"),
       })}
       onSubmit={(values, actions) => {
-        const scriptURL = "https://admin.bioesensi-crm.com/loguear";
-        const email = obtenerValor("#email");
-        const password = obtenerValor("#password");
-        const data = { email, password };
+        const scriptURL = localStorage.getItem('site')+"/loguear";
+        const email = obtenerValor('#email');
+        const password = obtenerValor('#password');
+        const data = {email, password};
         setCargandoVisible(true);
 
         fetch(scriptURL, {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers:{
+            'Content-Type': 'application/json'
+          }
         })
-          .then((resp) => resp.json())
-          .then(function (data) {
-            setCargandoVisible(false);
+        .then((resp) => resp.json())
+        .then(function(data) {
+          setCargandoVisible(false);
 
-            if (data.usuario_id > 0) {
-              let user_id = data.usuario_id;
-              const scriptURL = localStorage.getItem('site')+"/obtenerIniciales";
-              let dataUrl = {user_id};
+          if(data.usuario_id > 0){
+            let user_id = data.usuario_id;
+            const scriptURL = localStorage.getItem('site')+"/obtenerIniciales";
+            let dataUrl = {user_id};
 
-              fetch(scriptURL, {
-                method: 'POST',
-                body: JSON.stringify(dataUrl),
-                headers:{
-                  'Content-Type': 'application/json'
-                }
-              })
-              .then((resp) => resp.json())
-              .then(function(data) {
-                message.success('Logueado!');
-                localStorage.setItem('user_id', JSON.stringify(user_id));
-                localStorage.setItem('iniciales', data.iniciales);
-                window.location.href ='/Home';
-              })
-              .catch(error => {
-                alert(error.message);
-                console.error('Error!', error.message);
-              });
-            } else message.error("Los datos de acceso son incorrectos");
-          })
-          .catch((error) => {
-            alert(error.message);
-            console.error("Error!", error.message);
-          });
+            fetch(scriptURL, {
+              method: 'POST',
+              body: JSON.stringify(dataUrl),
+              headers:{
+                'Content-Type': 'application/json'
+              }
+            })
+            .then((resp) => resp.json())
+            .then(function(data) {
+              message.success('Logueado!');
+              localStorage.setItem('user_id', JSON.stringify(user_id));
+              localStorage.setItem('iniciales', data.iniciales);
+              window.location.href ='/Home';
+            })
+            .catch(error => {
+              alert(error.message);
+              console.error('Error!', error.message);
+            });
+
+          }
+          else
+            message.error('Los datos de acceso son incorrectos');
+        })
+        .catch(error => {
+          alert(error.message);
+          console.error('Error!', error.message);
+        });
       }}
     >
-      {({ values, errors, handleChange, handleBlur, handleSubmit }) => {
+      {({
+        values,
+        errors,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+      }) => {
         return (
           <>
-            <Form
-              className={`${style.LoginForm}`}
-              name="contact"
-              method="post"
-              onSubmit={handleSubmit}
-            >
+            <Form className={`${style.LoginForm}`} name="contact" method="post" onSubmit={handleSubmit}>
               <Input
                 placeholder="Email"
                 type="email"
-                id="email"
+                id='email'
                 name="email"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -115,13 +121,12 @@ export const Login = () => {
                   ¿Olvido su contraseña?
                 </Link>
 
-                {/*<img
-                  className={
-                    cargandoVisible ? "Cargando Mt mostrar" : "Cargando Mt"
-                  }
-                  src='img/loading.gif'
-                  alt="Cargando..."
-                />*/}
+                {/* <img className={cargandoVisible? "Cargando Mt mostrar" : "Cargando Mt"}  src="img/loading.gif" alt="" /> */}
+                
+                {/*
+                  <CircularProgress  className={cargandoVisible?'Cargando Mt mostrar':'Cargando Mt'}/>
+                */}
+
                 <input
                   className={`${style.LoginBtnIniciarSesion} u-floatRight u-redondeado u-efecto`}
                   type="submit"
@@ -133,5 +138,5 @@ export const Login = () => {
         );
       }}
     </Formik>
-  );
-};
+  )
+}

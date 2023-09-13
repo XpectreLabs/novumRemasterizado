@@ -1,11 +1,14 @@
 import * as React                 from "react";
 import Styles                     from "../../../pages/registroIngreso/ingresos.module.scss";
+import Style                      from '../../../pages/registroEgreso/egreso.module.scss';
 import TableCell                  from "@mui/material/TableCell";
 import TableRow                   from "@mui/material/TableRow";
 import PaymentOutlinedIcon        from "@mui/icons-material/PaymentOutlined";
 import RequestQuoteOutlinedIcon   from "@mui/icons-material/RequestQuoteOutlined";
 import { ModalBank }              from '../../organims/modalRegister';
 import { ModalTB }                from '../../organims/modalTable';
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
 
 const formatNumber = (number: number) =>
   new Intl.NumberFormat("en-US", {
@@ -119,6 +122,8 @@ export const RowsCustom = ({
               | undefined;
             statusCobro: boolean;
             date_created_o: any;
+            textRetraso: any;
+            statusBorrado: any;
           }) => (
             <TableRow
               key={data.id}
@@ -148,64 +153,97 @@ export const RowsCustom = ({
                 status
                 ? (
                   <TableCell align="left">
-                    {data.state == "Cobrado" ? (
-                      <ModalTB
-                        ingreso             = {true}
-                        eliminar            = {false}
-                        cobradoPagado       = {true}
-                        id                  = {data.id}
-                        date_created_o      = {data.date_created_o}
-                        cargarDatosIngresos = {cargarDatosIngresos}
-                        setListaDatos       = {setListaDatos}
-                        confirm2Loading     = {confirm2Loading}
-                        setConfirm2Loading  = {setConfirm2Loading}
-                        cargarDatosEgresos  = {cargarDatosEgresos}
-                      />
-                    ) : (
-                      <ModalTB
-                        ingreso             = {true}
-                        eliminar            = {false}
-                        cobradoPagado       = {false}
-                        id                  = {data.id}
-                        date_created_o      = {data.date_created_o}
-                        cargarDatosIngresos = {cargarDatosIngresos}
-                        setListaDatos       = {setListaDatos}
-                        confirm2Loading     = {confirm2Loading}
-                        setConfirm2Loading  = {setConfirm2Loading}
-                        cargarDatosEgresos  = {cargarDatosEgresos}
-                      />
-                    )}
+                    {
+                      !data.statusBorrado
+                        ? (
+                          data.state == "Cobrado" 
+                            ? (
+                              <ModalTB
+                                text                = {false}
+                                ingreso             = {true}
+                                eliminar            = {false}
+                                cobradoPagado       = {true}
+                                id                  = {data.id}
+                                date_created_o      = {data.date_created_o}
+                                cargarDatosIngresos = {cargarDatosIngresos}
+                                setListaDatos       = {setListaDatos}
+                                confirm2Loading     = {confirm2Loading}
+                                setConfirm2Loading  = {setConfirm2Loading}
+                                cargarDatosEgresos  = {cargarDatosEgresos}
+                                cancelar            = {false}
+                              />
+                            ) : (
+                              <ModalTB
+                                text                = {false}
+                                ingreso             = {true}
+                                eliminar            = {false}
+                                cobradoPagado       = {false}
+                                id                  = {data.id}
+                                date_created_o      = {data.date_created_o}
+                                cargarDatosIngresos = {cargarDatosIngresos}
+                                setListaDatos       = {setListaDatos}
+                                confirm2Loading     = {confirm2Loading}
+                                setConfirm2Loading  = {setConfirm2Loading}
+                                cargarDatosEgresos  = {cargarDatosEgresos}
+                                cancelar            = {false}
+                              />
+                            )
+                        )
+                        : (
+                          <Chip
+                            label     = "Cancelado"
+                            size      = "small"
+                            className = {Styles.chipTableNo}
+                          />
+                        )
+                    
+                    }
                   </TableCell>
                 )
                 : (
                   <TableCell align="left" className="IcoEstados">
-                    {data.state == "Pagado" ? (
-                      <ModalTB
-                        ingreso             = {false}
-                        eliminar            = {false}
-                        cobradoPagado       = {true}
-                        id                  = {data.id}
-                        date_created_o      = {data.date_created_o}
-                        cargarDatosIngresos = {cargarDatosIngresos}
-                        setListaDatos       = {setListaDatos}
-                        confirm2Loading     = {confirm2Loading}
-                        setConfirm2Loading  = {setConfirm2Loading}
-                        cargarDatosEgresos  = {cargarDatosEgresos}
-                      />
-                    ) : (
-                      <ModalTB
-                        ingreso             = {false}
-                        eliminar            = {false}
-                        cobradoPagado       = {false}
-                        id                  = {data.id}
-                        date_created_o      = {data.date_created_o}
-                        cargarDatosIngresos = {cargarDatosIngresos}
-                        setListaDatos       = {setListaDatos}
-                        confirm2Loading     = {confirm2Loading}
-                        setConfirm2Loading  = {setConfirm2Loading}
-                        cargarDatosEgresos  = {cargarDatosEgresos}
-                      />
-                    )}
+                    {
+                      !data.statusBorrado
+                        ? data.state == "Pagado" ? (
+                          <ModalTB
+                            text                = {false}
+                            ingreso             = {false}
+                            eliminar            = {false}
+                            cobradoPagado       = {true}
+                            id                  = {data.id}
+                            date_created_o      = {data.date_created_o}
+                            cargarDatosIngresos = {cargarDatosIngresos}
+                            setListaDatos       = {setListaDatos}
+                            confirm2Loading     = {confirm2Loading}
+                            setConfirm2Loading  = {setConfirm2Loading}
+                            cargarDatosEgresos  = {cargarDatosEgresos}
+                            cancelar            = {false}
+                          />
+                        ) : (
+                          <ModalTB
+                            text                = {false}
+                            ingreso             = {false}
+                            eliminar            = {false}
+                            cobradoPagado       = {false}
+                            id                  = {data.id}
+                            date_created_o      = {data.date_created_o}
+                            cargarDatosIngresos = {cargarDatosIngresos}
+                            setListaDatos       = {setListaDatos}
+                            confirm2Loading     = {confirm2Loading}
+                            setConfirm2Loading  = {setConfirm2Loading}
+                            cargarDatosEgresos  = {cargarDatosEgresos}
+                            cancelar            = {false}
+                          />
+                        )
+                        : (
+                          <Chip
+                            label     = "Cancelado"
+                            size      = "small"
+                            className = {Style.chipTableNo}
+                          />
+                        )
+                    
+                    }
                   </TableCell>
                 )
               }
@@ -215,30 +253,56 @@ export const RowsCustom = ({
                   ? data.statusCobro == true
                     ? <p className={Styles.txtCobrado}  >{data.date_cashed}</p>
                     : <p className={Styles.txtNoCobrado}>{data.date_cashed}</p>
-                  : <p>{data.date_cashed}</p>
+                  : !data.statusBorrado
+                      ? <p>{data.date_cashed + " " + data.textRetraso}</p>
+                      : "Cancelado"
                 }
               </TableCell>
+
               <TableCell className="Iconos-Tabla" align="right">
                 {
-                  status
+                  status //if is true, it is a Ingreso, else if, it is a Egreso
                   ? (
                     <div className={Styles.btnSection}>
-                      <ModalBank
-                        namePerson          = {true}
-                        txtCantidad         = {false}
-                        inputsIngresoEgreso = {true}
-                        txtConcept          = {true}
-                        fechaPago           = {true}
-                        text                = {''}
-                        cargarDatos         = {cargarDatosIngresos}
-                        edit                = {true}
-                        arrayData           = {pullData}
-                        rowId               = {data.id}
-                        saveDataEgreso      = {false}
-                        editBank            = {false}
-                        setListaDatos       = {setListaDatos}
-                      />
+                      {
+                        !data.statusBorrado
+                          ? (
+                            <Box sx={{display: "flex", gap: '5px'}}>
+                              <ModalTB
+                                text                = {false}
+                                ingreso             = {true}
+                                eliminar            = {true}
+                                cobradoPagado       = {false}
+                                id                  = {data.id}
+                                date_created_o      = {data.date_created_o}
+                                cargarDatosIngresos = {cargarDatosIngresos}
+                                setListaDatos       = {setListaDatos}
+                                confirm2Loading     = {confirm2Loading}
+                                setConfirm2Loading  = {setConfirm2Loading}
+                                cargarDatosEgresos  = {cargarDatosEgresos}
+                                cancelar            = {true}
+                              />
+                              <ModalBank
+                                namePerson          = {true}
+                                txtCantidad         = {false}
+                                inputsIngresoEgreso = {true}
+                                txtConcept          = {true}
+                                fechaPago           = {true}
+                                text                = {''}
+                                cargarDatos         = {cargarDatosIngresos}
+                                edit                = {true}
+                                arrayData           = {pullData}
+                                rowId               = {data.id}
+                                saveDataEgreso      = {false}
+                                editBank            = {false}
+                                setListaDatos       = {setListaDatos}
+                              />
+                            </Box>
+                          )
+                          : null
+                      }
                       <ModalTB
+                        text                = {false}
                         ingreso             = {true}
                         eliminar            = {true}
                         cobradoPagado       = {false}
@@ -249,27 +313,51 @@ export const RowsCustom = ({
                         confirm2Loading     = {confirm2Loading}
                         setConfirm2Loading  = {setConfirm2Loading}
                         cargarDatosEgresos  = {cargarDatosEgresos}
+                        cancelar            = {false}
                       />
                     </div>
                   )
                   : (
                     <div className={Styles.btnSection}>
-                      <ModalBank
-                        namePerson          = {true}
-                        txtCantidad         = {false}
-                        inputsIngresoEgreso = {true}
-                        txtConcept          = {true}
-                        fechaPago           = {true}
-                        text                = {''}
-                        cargarDatos         = {cargarDatosEgresos}
-                        edit                = {true}
-                        arrayData           = {pullData}
-                        rowId               = {data.id}
-                        saveDataEgreso      = {true}
-                        editBank            = {false}
-                        setListaDatos       = {setListaDatos}
-                      />
+                      {
+                        !data.statusBorrado
+                          ? (
+                            <Box sx={{display: "flex", gap: '5px'}}>
+                              <ModalTB
+                                text                = {false}
+                                ingreso             = {false}
+                                eliminar            = {true}
+                                cobradoPagado       = {false}
+                                id                  = {data.id}
+                                date_created_o      = {data.date_created_o}
+                                cargarDatosIngresos = {cargarDatosIngresos}
+                                setListaDatos       = {setListaDatos}
+                                confirm2Loading     = {confirm2Loading}
+                                setConfirm2Loading  = {setConfirm2Loading}
+                                cargarDatosEgresos  = {cargarDatosEgresos}
+                                cancelar            = {true}
+                              />
+                              <ModalBank
+                                namePerson          = {true}
+                                txtCantidad         = {false}
+                                inputsIngresoEgreso = {true}
+                                txtConcept          = {true}
+                                fechaPago           = {true}
+                                text                = {''}
+                                cargarDatos         = {cargarDatosEgresos}
+                                edit                = {true}
+                                arrayData           = {pullData}
+                                rowId               = {data.id}
+                                saveDataEgreso      = {true}
+                                editBank            = {false}
+                                setListaDatos       = {setListaDatos}
+                              />
+                            </Box>
+                          )
+                          : null
+                      }
                       <ModalTB
+                        text                = {false}
                         ingreso             = {false}
                         eliminar            = {true}
                         cobradoPagado       = {false}
@@ -280,6 +368,7 @@ export const RowsCustom = ({
                         confirm2Loading     = {confirm2Loading}
                         setConfirm2Loading  = {setConfirm2Loading}
                         cargarDatosEgresos  = {cargarDatosEgresos}
+                        cancelar            = {false}
                       />
                     </div>
                   )

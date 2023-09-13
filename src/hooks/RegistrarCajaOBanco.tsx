@@ -3,9 +3,11 @@ import { Default } from "../components/molecules/def-bank";
 import { TableRegistrarCajaOBanco } from '../pages/RegisterBank';
 
 export const RegistrarCajaOBanco = ({
-  cambioRegistroBan,
+  cajaActive,
+  setCajaActive,
 }: {
-  cambioRegistroBan: any;
+  cajaActive: any;
+  setCajaActive: any;
 }) => {
   const [status, setStatus] = useState(true);
 
@@ -19,7 +21,6 @@ export const RegistrarCajaOBanco = ({
     } else {
       return (
         <Default
-          cambioRegistroBan={cambioRegistroBan}
           cambioTable={cambioTable}
         />
       );
