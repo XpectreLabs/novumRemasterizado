@@ -192,6 +192,7 @@ return (
         saveDataEgreso      = {false}
         editBank            = {false}
         setListaDatos       = {setListaDatos}
+        duplicar            = {false}
       />
     </div>
 

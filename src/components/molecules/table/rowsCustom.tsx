@@ -268,6 +268,22 @@ export const RowsCustom = ({
                         !data.statusBorrado
                           ? (
                             <Box sx={{display: "flex", gap: '5px'}}>
+                              <ModalBank
+                                namePerson          = {true}
+                                txtCantidad         = {false}
+                                inputsIngresoEgreso = {true}
+                                txtConcept          = {true}
+                                fechaPago           = {true}
+                                text                = {''}
+                                cargarDatos         = {cargarDatosIngresos}
+                                edit                = {false}
+                                arrayData           = {pullData}
+                                rowId               = {data.id}
+                                saveDataEgreso      = {false}
+                                editBank            = {false}
+                                setListaDatos       = {setListaDatos}
+                                duplicar            = {true}
+                              />
                               <ModalTB
                                 text                = {false}
                                 ingreso             = {true}
@@ -296,6 +312,7 @@ export const RowsCustom = ({
                                 saveDataEgreso      = {false}
                                 editBank            = {false}
                                 setListaDatos       = {setListaDatos}
+                                duplicar            = {false}
                               />
                             </Box>
                           )
@@ -323,6 +340,22 @@ export const RowsCustom = ({
                         !data.statusBorrado
                           ? (
                             <Box sx={{display: "flex", gap: '5px'}}>
+                              <ModalBank
+                                namePerson          = {true}
+                                txtCantidad         = {false}
+                                inputsIngresoEgreso = {true}
+                                txtConcept          = {true}
+                                fechaPago           = {true}
+                                text                = {''}
+                                cargarDatos         = {cargarDatosEgresos}
+                                edit                = {false}
+                                arrayData           = {pullData}
+                                rowId               = {data.id}
+                                saveDataEgreso      = {true}
+                                editBank            = {false}
+                                setListaDatos       = {setListaDatos}
+                                duplicar            = {true}
+                              />
                               <ModalTB
                                 text                = {false}
                                 ingreso             = {false}
@@ -351,6 +384,7 @@ export const RowsCustom = ({
                                 saveDataEgreso      = {true}
                                 editBank            = {false}
                                 setListaDatos       = {setListaDatos}
+                                duplicar            = {false}
                               />
                             </Box>
                           )

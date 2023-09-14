@@ -186,6 +186,7 @@ return(
           saveDataEgreso      = {true}
           editBank            = {false}
           setListaDatos       = {setListaDatos}
+          duplicar            = {false}
         />
       </Box>
     </Box>
