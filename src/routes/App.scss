@@ -41,14 +41,6 @@
   color: #fff !important;
 }
 
-.icon-icoCobrarDismiss::before{
-  font-size: 25px !important;
-}
-
-.icon-icoCobrar::before{
-  font-size: 25px !important;
-}
-
 #BtnSiguiente, #BtnTerminar {
   display: none;
 }
@@ -98,8 +90,23 @@
 }
 
 .ant-btn-default {
-  display: none !important;
+  //display: none !important;
 }
+
+.Cobrado .ant-btn-default {
+  color: #f5232d !important;
+}
+
+.Cobrado .ant-btn-default:hover {
+  color: #ffffff !important;
+  background: #f5232d !important;
+}
+
+.Cobrado .ant-btn-primary {
+  color: #ffffff !important;
+  background: #f5232d !important;
+}
+
 
 .Cargando {
   display: none;

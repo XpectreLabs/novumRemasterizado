@@ -16,6 +16,8 @@ import { RegistrarCajaOBanco }                  from "../../hooks/RegistrarCajaO
 import { RegistrarIngresosFuturos }             from "../../hooks/RegistrarIngresosFuturos";
 import { RegistrarEgresosFuturos }              from "../../hooks/RegistrarEgresos";
 import { CerrarSesion }                         from '../../cerrarSesion';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
 
 const drawerWidth = 250;
 
@@ -42,7 +44,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Resumen", "1", <span className="icon-icoResumen"></span>),
+  getItem("Resumen", "1", <div className={style.container}><MenuBookOutlinedIcon className={style.iconMenu}/></div>),
   getItem(
     "Registrar caja o banco",
     "2",

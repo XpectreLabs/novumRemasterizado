@@ -340,71 +340,76 @@ export const ModalTB = ({
   return(
     <Box>
       { cancelar
-          ? <CloseOutlined 
-              onClick={()=>{showModalCl(id)}} 
-              className="u-efecto slideRight u-marginR-5" 
-            />
-          : eliminar
-            ? text
-                ? (
-                  <Button
-                    variant = "text"
-                    classes = {{root: Scss.btnTxt}}
-                    onClick = {() => {
-                      showModalE(id)
-                    }}
-                  >
-                    Eliminar
-                  </Button>
-                )
-                : <DeleteIcon className="icoBorrar u-efecto slideRight" onClick={()=>{showModalE(id)}}/>
-            : ingreso
-              ? cobradoPagado
-                ? (
-                  <Chip
-                    icon        = {<span className="icon-icoCobrar"></span>}
-                    size        = "small"
-                    label       = "Cobrado"
-                    className   = {Styles.chipTable}
-                    onClick     = {() => {
-                      showModalC( id, 2, date_created_o )
-                    }}
-                  />
-                )
-                : (
-                  <Chip
-                    icon      = {<span className="icon-icoCobrarDismiss"></span>}
-                    label     = "No cobrado"
-                    size      = "small"
-                    className = {Styles.chipTableNo}
-                    onClick   = {() => {
-                      showModalC( id, 1, date_created_o );
-                    }}
-                  />
-                )
-              : cobradoPagado 
-                ? (
-                  <Chip
-                    icon        = {<span className="icon-icoCobrar"></span>}
-                    size        = "small"
-                    label       = "Pagado"
-                    className   = {Style.chipTable}
-                    onClick     = {() => {
-                      showModalP( id, 2, date_created_o )
-                    }}
-                  />
-                )
-                : (
-                  <Chip
-                    icon        = {<span className="icon-icoCobrarDismiss"></span>}
-                    label       = "No pagado"
-                    size        = "small"
-                    className   = {Style.chipTableNo}
-                    onClick     = {() => {
-                      showModalP( id, 1, date_created_o )
-                    }}
-                  />
-                )
+        ? <CloseOutlined 
+            onClick   = {()=>{showModalCl(id)}} 
+            sx        = {{cursor: 'pointer'}}
+            className = "u-efecto slideRight u-marginR-5" 
+          />
+        : eliminar
+          ? text
+            ? (
+              <Button
+                variant = "text"
+                classes = {{root: Scss.btnTxt}}
+                onClick = {() => {
+                  showModalE(id)
+                }}
+              >
+                Eliminar
+              </Button>
+            )
+            : <DeleteIcon 
+                className = "icoBorrar u-efecto slideRight" 
+                onClick   = {()=>{showModalE(id)}} 
+                sx        = {{cursor: 'pointer'}}
+              />
+          : ingreso
+            ? cobradoPagado
+              ? (
+                <Chip
+                  icon        = {<span className="icon-icoCobrar"></span>}
+                  size        = "small"
+                  label       = "Cobrado"
+                  className   = {Styles.chipTable}
+                  onClick     = {() => {
+                    showModalC( id, 2, date_created_o )
+                  }}
+                />
+              )
+              : (
+                <Chip
+                  icon      = {<span className="icon-icoCobrarDismiss"></span>}
+                  label     = "No cobrado"
+                  size      = "small"
+                  className = {Styles.chipTableNo}
+                  onClick   = {() => {
+                    showModalC( id, 1, date_created_o );
+                  }}
+                />
+              )
+            : cobradoPagado 
+              ? (
+                <Chip
+                  icon        = {<span className="icon-icoCobrar"></span>}
+                  size        = "small"
+                  label       = "Pagado"
+                  className   = {Style.chipTable}
+                  onClick     = {() => {
+                    showModalP( id, 2, date_created_o )
+                  }}
+                />
+              )
+              : (
+                <Chip
+                  icon        = {<span className="icon-icoCobrarDismiss"></span>}
+                  label       = "No pagado"
+                  size        = "small"
+                  className   = {Style.chipTableNo}
+                  onClick     = {() => {
+                    showModalP( id, 1, date_created_o )
+                  }}
+                />
+              )
       }
 
       <Modal
@@ -433,7 +438,8 @@ export const ModalTB = ({
               ? `${Styles.ModalCobrar} Cobrado u-textCenter`
               : `${Styles.ModalCobrar} u-textCenter`
         }
-        confirmLoading={confirm2Loading}
+        confirmLoading  = {confirm2Loading}
+        maskClosable    = {false}
       >
         <form
           className = {Styles.ModalForm}
@@ -454,20 +460,24 @@ export const ModalTB = ({
             id      = "idEgresoFuturo" 
             value   = {idEgresoStatus} 
           />
-          <span
-            className={cobrado ? "icon-icoCobrarDismiss" : "icon-icoCobrar"}
-          ></span>
-          {/* <p><strong>{cobrado?"¿Este ingreso ya fue cobrado, desea cambiarlo?":"Deseas cobrar esta deuda, se creará un registro de cobro"}</strong></p>*/}
+          <Box 
+            sx        = {{fontSize: '40px'}}
+            className = {
+              ingreso 
+                ? cobrado ? "icon-icoCobrarDismiss" : "icon-icoCobrar"
+                : pagado ? "icon-icoCobrarDismiss" : "icon-icoCobrar"
+            }>
+          </Box>
           <p>
             <strong>
               {
                 ingreso
-                  ? cobrado
-                      ? '¿Este ingreso ya fue cobrado, desea cambiarlo?'
-                      : ''
-                  : pagado
-                      ? '¿Este egreso ya fue pagado, desea cambiarlo?'
-                      : ''
+                ? cobrado
+                  ? '¿Este ingreso ya fue cobrado, desea cambiarlo?'
+                  : ''
+                : pagado
+                  ? '¿Este egreso ya fue pagado, desea cambiarlo?'
+                  : ''
               }
             </strong>
           </p>
@@ -568,6 +578,7 @@ export const ModalTB = ({
         cancelText    = "Cancelar"
         className     = {`${Styles.ModalCobrar} u-textCenter`}
         confirmLoading= {confirm3Loading}
+        maskClosable  = {false}
       >
         <form
           className = {Styles.ModalForm}
@@ -596,6 +607,7 @@ export const ModalTB = ({
         cancelText      = "Salir"
         className       = {`${Styles.ModalCobrar} Cobrado u-textCenter`}
         confirmLoading  = {confirm4Loading}
+        maskClosable    = {false}
       >
         <form
           className={Styles.ModalForm}

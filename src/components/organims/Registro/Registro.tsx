@@ -116,11 +116,11 @@ export const Registro = () => {
             Terminar registro
           </Button>
         )}
-        {current > 0 && (
+        {/*current > 0 && (
           <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
             Previous
           </Button>
-        )}
+        )*/}
       </div>
     </>
   );

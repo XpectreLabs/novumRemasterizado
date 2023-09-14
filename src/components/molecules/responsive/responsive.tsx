@@ -162,6 +162,23 @@ export const ResponsiveDesing = ({
                             saveDataEgreso      = {false}
                             editBank            = {false}
                             setListaDatos       = {setListaDatos}
+                            duplicar            = {false}
+                          /> 
+                          <ModalBank
+                            namePerson          = {true}
+                            txtCantidad         = {false}
+                            inputsIngresoEgreso = {true}
+                            txtConcept          = {true}
+                            fechaPago           = {true}
+                            text                = {true}
+                            cargarDatos         = {cargarDatosIngresos}
+                            edit                = {false}
+                            arrayData           = {listaDatos}
+                            rowId               = {item.id}
+                            saveDataEgreso      = {false}
+                            editBank            = {false}
+                            setListaDatos       = {setListaDatos}
+                            duplicar            = {true}
                           /> 
                           <ModalTB
                             text                = {true}
@@ -195,6 +212,23 @@ export const ResponsiveDesing = ({
                             saveDataEgreso      = {true}
                             editBank            = {false}
                             setListaDatos       = {setListaDatos}
+                            duplicar            = {false}
+                          />
+                          <ModalBank
+                            namePerson          = {true}
+                            txtCantidad         = {false}
+                            inputsIngresoEgreso = {true}
+                            txtConcept          = {true}
+                            fechaPago           = {true}
+                            text                = {true}
+                            cargarDatos         = {cargarDatosEgresos}
+                            edit                = {false}
+                            arrayData           = {listaDatos}
+                            rowId               = {item.id}
+                            saveDataEgreso      = {true}
+                            editBank            = {false}
+                            setListaDatos       = {setListaDatos}
+                            duplicar            = {true}
                           />
                           <ModalTB
                             text                = {true}

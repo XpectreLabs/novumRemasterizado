@@ -174,3 +174,16 @@
     display: block !important;
   }
 }
+
+.iconMenu{
+  font-size: 19px !important;
+}
+
+.container{
+  position: absolute;
+  top: 50%;
+  //left: 17%;
+  width: 1%;
+  padding-left: 6px;
+  transform: translate(-50%, -50%);
+ }

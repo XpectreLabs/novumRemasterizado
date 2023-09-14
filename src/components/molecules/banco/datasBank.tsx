@@ -92,6 +92,7 @@ export const DataBank = ({
                     saveDataEgreso      = {false}
                     editBank            = {true}
                     setListaDatos       = {setListaDatos}
+                    duplicar            = {false}
                   />
                   <IconButton type="button" aria-label="Edit">
                     <MoreVertIcon />

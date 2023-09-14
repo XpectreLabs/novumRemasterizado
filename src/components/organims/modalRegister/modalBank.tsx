@@ -12,6 +12,7 @@ import fn                                     from "../../../utility";
 import IconButton                             from "@mui/material/IconButton";
 import EditOutlinedIcon                       from "@mui/icons-material/EditOutlined";
 import Icon                                   from '@mui/material/Icon';
+import ContentCopyIcon                        from '@mui/icons-material/ContentCopy';
 
 const user_id = localStorage.getItem("user_id");
 
@@ -29,6 +30,7 @@ export const ModalBank = ({
   saveDataEgreso,
   editBank,
   setListaDatos,
+  duplicar,
 }: {
   namePerson:           boolean;
   fechaPago:            boolean;
@@ -43,6 +45,7 @@ export const ModalBank = ({
   saveDataEgreso:       boolean;
   editBank:             boolean;
   setListaDatos:        any;
+  duplicar:             boolean;
 }) => {
   const [open,            setOpen]              = useState(false);
   const [confirmLoading,  setConfirmLoading]    = useState(false);
@@ -140,15 +143,51 @@ export const ModalBank = ({
     }, 100);
   };
 
+  const duplicarItem = (id: any) => {
+    showModal();
+    const pos = fn.buscarPosicionArreglo(arrayData, id);
+
+    setTimeout(() => {
+      setInitialValue({
+        hdId:                   "",
+        txtNombre:              arrayData[pos]["name"],
+        txtConcepto:            arrayData[pos]["concept"],
+        stTipo:                 arrayData[pos]["id_payment_method"],
+        txtCantidadActual:      "",
+        stCategoria:            arrayData[pos]["id_category"],
+        txtMonto:               arrayData[pos]["amount"],
+        txtFechaTentativaCobro: "",
+      });
+    }, 100);
+  }
+
   return (
     <Box>
       <Box className={Styles.itemButton}>
         {
-          editBank
+          duplicar
+          ? text
+              ? <Button
+                  variant = "text"
+                  classes = {{root: Styles.btnTxt}}
+                  onClick = {() => {
+                    duplicarItem(rowId);
+                  }}
+                >
+                  Duplicar
+                </Button>
+              : <ContentCopyIcon
+                  onClick = {() => {
+                    duplicarItem(rowId);
+                  }}
+                  sx={{cursor: 'pointer'}}
+                />
+          : editBank
             ?(
               <IconButton type="button" aria-label="Edit">
                 <EditOutlinedIcon 
-                  onClick={() => {
+                  sx      = {{cursor: 'pointer'}}
+                  onClick = {() => {
                     editarBank(rowId);
                   }}
                 />
@@ -167,23 +206,26 @@ export const ModalBank = ({
                       Editar
                     </Button>
                   )
-                  : (<EditIcon
-                    onClick={() => {
-                      editar(rowId);
-                    }}
-                  />
-                )
-              :(
+                  : (
+                    <EditIcon
+                      sx      = {{cursor: 'pointer'}}
+                      onClick = {() => {
+                        editar(rowId);
+                      }}
+                    />
+                  )
+              : (
                 <Box className={Styles.itemButton2}>
                   <Box className={Styles.btnText}>
                     <Button
                       variant   = "contained"
                       color     = "success"
                       startIcon = {<AddIcon />}
-                      classes={{
+                      classes   = {{
                         root: Styles.btnCreateAccount,
                       }}
-                      onClick={showModal}
+                      onClick   = {showModal}
+                      sx        = {{cursor: 'pointer'}}
                     >
                       {text}
                     </Button>
@@ -191,8 +233,9 @@ export const ModalBank = ({
 
                   <Box className={Styles.btnIcon}>
                     <Icon 
-                      color = "success"
-                      onClick={showModal}
+                      color   = "success"
+                      onClick = {showModal}
+                      sx      = {{cursor: 'pointer'}}
                     >
                       <AddIcon />
                     </Icon>
@@ -211,6 +254,7 @@ export const ModalBank = ({
         onCancel        = {handleCancel}
         okText          = "Guardar"
         cancelText      = "Cancelar"
+        maskClosable    = {false}
       >
         <Formik
           enableReinitialize  = {true}
