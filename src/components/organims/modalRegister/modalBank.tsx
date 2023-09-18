@@ -1,18 +1,20 @@
-import Styles                                 from "./modalBank.module.scss";
-import Box                                    from "@mui/material/Box";
-import Button                                 from "@mui/material/Button";
-import AddIcon                                from "@mui/icons-material/Add";
-import CircularProgress                       from "@mui/material/CircularProgress";
-import EditIcon                               from "@mui/icons-material/Edit";
-import { Formik, Form, FieldInputProps }      from "formik";
-import { Modal, message, Input, DatePicker }  from "antd";
-import { useState }                           from "react";
-import * as Yup                               from "yup";
-import fn                                     from "../../../utility";
-import IconButton                             from "@mui/material/IconButton";
-import EditOutlinedIcon                       from "@mui/icons-material/EditOutlined";
-import Icon                                   from '@mui/material/Icon';
-import ContentCopyIcon                        from '@mui/icons-material/ContentCopy';
+import Styles                                   from "./modalBank.module.scss";
+import Box                                      from "@mui/material/Box";
+import Button                                   from "@mui/material/Button";
+import AddIcon                                  from "@mui/icons-material/Add";
+import CircularProgress                         from "@mui/material/CircularProgress";
+import EditIcon                                 from "@mui/icons-material/Edit";
+import { Formik, Form, FieldInputProps }        from "formik";
+import { Modal, message, Input, AutoComplete }  from "antd";
+import { useState }                             from "react";
+import * as Yup                                 from "yup";
+import fn                                       from "../../../utility";
+import IconButton                               from "@mui/material/IconButton";
+import EditOutlinedIcon                         from "@mui/icons-material/EditOutlined";
+import Icon                                     from '@mui/material/Icon';
+import ContentCopyIcon                          from '@mui/icons-material/ContentCopy';
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 const user_id = localStorage.getItem("user_id");
 
@@ -52,6 +54,7 @@ export const ModalBank = ({
   const [messageApi,      contextHolder]        = message.useMessage();
   const [cargandoModal,   setcargandoModal]     = useState(false);
   const [value,           setValue]             = useState<any>();
+  const [listConceptos,   setListConceptos]     = useState([]);
 
   const [initialValuesCaja, setInitialValuesCaja] = useState({
     hdId:               "",
@@ -81,7 +84,12 @@ export const ModalBank = ({
     txtFechaTentativaCobro: ""
   });
 
+  const [initial, setInitial] = useState({
+    txtConcepto:  "",
+  });
+
   const showModal = () => {
+    cargarConceptos(setListConceptos);
     setOpen(true);
   };
 
@@ -160,6 +168,40 @@ export const ModalBank = ({
       });
     }, 100);
   }
+
+  function cargarConceptos(setListConceptos: Function) {
+    let scriptURL = localStorage.getItem('site') + "/listConceptosIngresosFuturos";
+    let dataUrl   = {user_id};
+  
+    fetch(scriptURL, {
+      method: 'POST',
+      body:   JSON.stringify(dataUrl),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((resp) => resp.json())
+    .then(function(info) {
+      setListConceptos(info['dataConceptos']);
+    })
+    .catch(error => {
+      console.log   (error.message);
+      console.error ('Error!', error.message);
+    });
+  }
+
+  const handleConceptoChange = (event: Function | String  | any) => {
+    setInitialValue({
+      hdId:                   fn.obtenerValor("#hdId"),
+      txtNombre:              fn.obtenerValor("#txtNombre"),
+      txtConcepto:            event,
+      stTipo:                 fn.obtenerValor("#stTipo"),
+      txtCantidadActual:      "",
+      stCategoria:            fn.obtenerValor("#stCategoria"),
+      txtMonto:               fn.obtenerValor("#txtMonto")                ?? "",
+      txtFechaTentativaCobro: fn.obtenerValor("#txtFechaTentativaCobro")  ?? "",
+    });
+  };
 
   return (
     <Box>
@@ -242,7 +284,6 @@ export const ModalBank = ({
                   </Box>
                 </Box>
               )
-          
         }
       </Box>
 
@@ -488,15 +529,17 @@ export const ModalBank = ({
                   />
 
                   {txtConcept ? (
-                    <Input
-                      placeholder       = "Concepto"
-                      type              = "text"
-                      id                = "txtConcepto"
-                      name              = "txtConcepto"
-                      value             = {values.txtConcepto}
-                      onChange          = {handleChange}
-                      onBlur            = {handleBlur}
-                      autoCapitalize    = "off"
+                    <AutoComplete
+                      id            = "txtConcepto"
+                      className     = {Styles.autoComplete}
+                      options       = {listConceptos}
+                      placeholder   = "Concepto"
+                      filterOption  = {(inputValue, option: any) =>
+                        option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                      }
+                      value         = {values.txtConcepto}
+                      onChange      = {handleConceptoChange}
+                      onBlur        = {handleBlur}
                     />
                   ) : null}
 

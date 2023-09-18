@@ -679,8 +679,6 @@ router.post('/cambiarCobrado', async (req,res, next) => {
   const fechaRealizo = req.body.fechaRealizo;
   let fechaDeCobro;
 
-  //console.log(tipoFecha+" "+fechaRealizo);
-
   if(tipoFecha===1)
     fechaDeCobro = new Date().toISOString();
   else
@@ -810,10 +808,38 @@ router.post('/listIngresosFuturosFiltro', async (req,res,next) => {
       listIngresosFuturos = listIngresosFuturosAux;
     }
 
-    //console.log("Registros: "+Object.keys(listIngresosFuturos).length);
     res.json({listIngresosFuturos});
   }
 });
+
+
+router.post('/listConceptosIngresosFuturos', async (req,res,next) => {
+  if(req.body.user_id!==null) {
+    const id = req.body.user_id;
+    let dataConceptos = [];
+
+    const listConceptosIngresosFuturos = await prisma.ingresos_futuros.findMany({
+      where: {
+        user_id : parseInt(id),
+        activo : true
+      },
+      distinct: ['concepto'],
+      select: {
+        concepto: true,
+      },
+    });
+
+    for(let j=0; j< listConceptosIngresosFuturos.length; j++){
+      let item = {
+        "value": listConceptosIngresosFuturos[j]['concepto'],
+      }
+      dataConceptos.push(item);
+    }
+
+    res.json({dataConceptos});
+  }
+});
+
 
 router.post('/altaEgresoFuturo', async (req,res, next) => {
   let fechaCreacion = new Date().toISOString();
@@ -981,7 +1007,6 @@ router.post('/cambiarPagado', async (req,res, next) => {
 });
 
 
-
 router.post('/revertirPago', async (req,res, next) => {
   const id = parseInt(req.body.egresos_futuros_id);
 
@@ -997,8 +1022,6 @@ router.post('/revertirPago', async (req,res, next) => {
 });
 
 
-
-
 router.post('/listEgresosFuturosFiltro', async (req,res,next) => {
   if(req.body.user_id!==null) {
     const id = parseInt(req.body.user_id);
@@ -1006,7 +1029,6 @@ router.post('/listEgresosFuturosFiltro', async (req,res,next) => {
     const estado_id = parseInt(req.body.estado_id);
 
     let listEgresosFuturos;
-    //console.log(metodo_id + " " +estado_id);
 
     if(metodo_id !== 0) {
       listEgresosFuturos = await prisma.egresos_futuros.findMany({
@@ -1038,8 +1060,6 @@ router.post('/listEgresosFuturosFiltro', async (req,res,next) => {
           },
         },
       });
-
-      //console.log(listEgresosFuturos);
     }
     else {
       listEgresosFuturos = await prisma.egresos_futuros.findMany({
@@ -1079,13 +1099,11 @@ router.post('/listEgresosFuturosFiltro', async (req,res,next) => {
         if(estado_id === 1) {
           if(listEgresosFuturos[j]['fecha_pago']!==null) {
             listEgresosFuturosAux.push(listEgresosFuturos[j]);
-            //console.log("F_C -> 1 -> : "+listEgresosFuturos[j]['fecha_pago']);
           }
         }
         else if(estado_id === 2) {
           if(listEgresosFuturos[j]['fecha_pago']===null && !listEgresosFuturos[j]['borrado']) {
             listEgresosFuturosAux.push(listEgresosFuturos[j]);
-            //console.log("F_C -> 2 -> : "+listEgresosFuturos[j]['fecha_pago']);
           }
         }
         else if(estado_id === 3) {
@@ -1102,8 +1120,34 @@ router.post('/listEgresosFuturosFiltro', async (req,res,next) => {
       listEgresosFuturos = listEgresosFuturosAux;
     }
 
-    //console.log("Registros: "+Object.keys(listEgresosFuturos).length);
     res.json({listEgresosFuturos});
+  }
+});
+
+router.post('/listConceptosEgresosFuturos', async (req,res,next) => {
+  if(req.body.user_id!==null) {
+    const id = req.body.user_id;
+    let dataConceptos = [];
+
+    const listConceptosEgresosFuturos = await prisma.egresos_futuros.findMany({
+      where: {
+        user_id : parseInt(id),
+        activo : true
+      },
+      distinct: ['concepto'],
+      select: {
+        concepto: true,
+      },
+    });
+
+    for(let j=0; j< listConceptosEgresosFuturos.length; j++){
+      let item = {
+        "value": listConceptosEgresosFuturos[j]['concepto'],
+      }
+      dataConceptos.push(item);
+    }
+
+    res.json({dataConceptos});
   }
 });
 
@@ -1131,14 +1175,10 @@ router.post('/todos', async (req,res,next) => {
       },
     });
 
-    /*console.log(listCajasBancos.length);
-    console.log(listIngresosFuturos.length);
-    console.log(listEgresosFuturos.length);*/
-
     res.json({"caja":listCajasBancos.length,"ingreso":listIngresosFuturos.length,"egreso":listEgresosFuturos.length});
   }
 });
-
+//story bug
 
 // Servidor HTTP
 // const serverHttp = http.createServer(router);
