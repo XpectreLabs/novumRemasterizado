@@ -30,6 +30,13 @@ let listData: IData[];
 let data: any;
 const user_id = localStorage.getItem('user_id');
 
+export const TableRegistrarCajaOBanco = () => {
+const [cargandoVisible, setCargandoVisible] = useState(true);   
+const [cantidadV,       setCantidadV]       = useState<number>(0);
+const [listaDatos,      setListaDatos]      = useState([]);
+const [listSaldo,       setListSaldo]       = useState([]);
+const [saldoTotal,      setSaldoTotal]      = useState(-1);
+
 async function cargarDatos (
   buscar?:                    boolean,
   setListaDatos?:             any,
@@ -58,18 +65,13 @@ async function cargarDatos (
   })
   .then((resp) => resp.json())
   .then(function(info) {
-    data = fng.obtenerData(info);
-    listData = [];
-    listData = Object.assign(fng.obtenerData(info));
-    //console.log(data);
-    info['dataCajasBancos'].pop()
-    //setListSaldo(info['dataCajasBancos']);
+    data      = fng.obtenerData(info);
+    listData  = [];
+    listData  = Object.assign(fng.obtenerData(info));
 
-    let saldTot=0;
-    for(let j=0; j<info['dataCajasBancos'].length; j++) {
-      saldTot += parseInt(info['dataCajasBancos'][j]['total'].slice(0,-3).replace('$','').replace(',',''))
+    if(ejecutarSetInitialValues){
+      setCargandoVisible(false)
     }
-    //setSaldoTotal(saldTot);
 
     if (buscar) {
       setListaDatos(data);
@@ -92,18 +94,39 @@ async function cargarDatos (
     console.log(error.message);
     console.error('Error!', error.message);
   });
+
+  //######################
+
+  scriptURL = localStorage.getItem('site') + "/resumenCajasBancos";
+  dataUrl   = {user_id};
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body:   JSON.stringify(dataUrl),
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  })
+  .then((resp) => resp.json())
+  .then(function(info) {
+    info['dataCajasBancos'].pop()
+    setListSaldo(info['dataCajasBancos']);
+
+    let saldTot = 0;
+    for(let j   = 0; j < info['dataCajasBancos'].length; j++) {
+      saldTot   += parseInt(info['dataCajasBancos'][j]['total'].slice(0,-3).replace('$','').replaceAll(',',''));
+    }
+    setSaldoTotal(saldTot);
+  })
+  .catch(error => {
+    console.log(error.message);
+    console.error('Error!', error.message);
+  });
 }
 
 if(user_id!==""&&user_id!==null) {
   cargarDatos();
 }
-
-export const TableRegistrarCajaOBanco = () => {
-const [cargandoVisible, setCargandoVisible] = useState(true);   
-const [cantidadV,       setCantidadV]       = useState<number>(0);
-const [listaDatos,      setListaDatos]      = useState([]);
-const [listSaldo,       setListSaldo]       = useState([]);
-const [saldoTotal,      setSaldoTotal]      = useState(-1);
 
 let idSI = setInterval(() => {
   if (!data) console.log("Vacio");
@@ -196,39 +219,33 @@ return (
       />
     </div>
 
-    <Box className={Styles.nav2}>
+    <Box className={Styles.navChips}>
       {listSaldo.map((saldo: IDataSaldo) => (
-        <Box>
-          <p>
-            <strong className={Styles.TitleSaldo}>
-              Saldo en {saldo.tipo}:
-            </strong>{" "}
-            <span className={Styles.Saldo}>{saldo.total}</span>
-          </p>
+        <Box sx={{display: 'flex'}}>
+          <strong className={Styles.TitleSaldo}>
+            Saldo en {saldo.tipo}:
+          </strong>{" "}
+          <span className={Styles.Saldo}>{saldo.total}</span>
         </Box>
       ))}
       {saldoTotal != -1 ? (
-        <Box className="u-textRight">
-          <p>
-            <strong className={Styles.TitleSaldo}>
-              Saldo total en las cuentas:
-            </strong>{" "}
-            <span className={Styles.Saldo}>
-              ${fn.formatNumber(saldoTotal)}
-            </span>
-          </p>
+        <Box className="u-textRight" sx={{display: 'flex'}}>
+          <strong className={Styles.TitleSaldo}>
+            Saldo total en las cuentas:
+          </strong>{" "}
+          <span className={Styles.Saldo}>
+            ${fn.formatNumber(saldoTotal)}
+          </span>
         </Box>
       ) : null}
     </Box>
 
-    <Box sx={{marginTop: '40px'}}>
     <DataBank 
       arrays        = {listaDatos} 
       setListaDatos = {setListaDatos} 
       cargarDatos   = {cargarDatos}
     />
-    </Box>
-
+   
     <Box
       className = {cargandoVisible ? "u-textCenter" : "u-textCenter u-ocultar"}
     >
