@@ -55,6 +55,7 @@ export const ModalBank = ({
   const [cargandoModal,   setcargandoModal]     = useState(false);
   const [value,           setValue]             = useState<any>();
   const [listConceptos,   setListConceptos]     = useState([]);
+  const txtMonto = '';
 
   const [initialValuesCaja, setInitialValuesCaja] = useState({
     hdId:               "",
@@ -201,6 +202,15 @@ export const ModalBank = ({
       txtMonto:               fn.obtenerValor("#txtMonto")                ?? "",
       txtFechaTentativaCobro: fn.obtenerValor("#txtFechaTentativaCobro")  ?? "",
     });
+  };
+
+  // Función para realizar permitir solo números
+  const handleKeyPress = (e: any) => {
+    var key   = e.key;
+    var regex = /[0-9]|\./;
+    if( !regex.test(key) ) {
+      e.preventDefault();
+    }
   };
 
   return (
@@ -591,6 +601,7 @@ export const ModalBank = ({
                         id          = "txtMonto"
                         name        = "txtMonto"
                         value       = {values.txtMonto}
+                        onKeyPress  = {(e) => handleKeyPress(e)}
                         onChange    = {handleChange}
                         onBlur      = {handleBlur}
                       />
