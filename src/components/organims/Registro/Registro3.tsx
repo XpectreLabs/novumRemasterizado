@@ -4,6 +4,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Formik, Form } from "formik";
 import style from './Registro.module.scss';
 import * as Yup from "yup";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const Registro3 = () => {
     const [passwordVisible, setPasswordVisible] = React.useState(false);
@@ -137,14 +138,33 @@ export const Registro3 = () => {
                       </Space>
 
                       <div>
-                        <p><strong>{(errors.password)?`Errores:`:null}</strong></p>
-                        {errors.password}<br />
-                        {errors.repitePasword}<br /><br />
+                        <p>
+                          <strong>
+                            {errors.password || errors.repitePasword
+                              ? `Errores:`
+                              : null}
+                          </strong>
+                        </p>
+                        {errors.password ? <p>{errors.password}</p> : null}
+                        {errors.repitePasword ? (
+                          <p>{errors.repitePasword}</p>
+                        ) : null}
                       </div>
 
-                      <div className='u-textLeft'>
-                        <img className={cargandoVisible? "Cargando mostrar" : "Cargando"}  src="img/loading.gif" alt="" />
-                        <input id="btnTerminarRegistro" className={`${style.RegistroBtnSiguiente} u-floatRight u-redondeado u-efecto`} type="submit" value="Terminar registro" />
+                      <div className="u-textLeft">
+                       {/*
+                       <CircularProgress
+                          className={
+                            cargandoVisible ? "Cargando Mt mostrar" : "Cargando Mt"
+                          }
+                        />
+                       */}
+                        <input
+                          id="btnTerminarRegistro"
+                          className={`${style.RegistroBtnSiguiente} u-floatRight u-redondeado u-efecto`}
+                          type="submit"
+                          value="Terminar registro"
+                        />
                       </div>
                   </Form>
                 }

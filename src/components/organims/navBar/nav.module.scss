@@ -61,14 +61,18 @@
   width:        35%;
 }
 
-.searchSelect{
-  width: inherit;
-  width: 50%;
+.itemSearch{
+  width: 100%;
 }
 
-@media all and (max-width: 1200px){
+.searchSelect Select{ 
+  width: 30%;
+}
+
+@media all and (max-width: 1220px){
   .nav{
-    flex-direction: row; 
+    flex-direction: row;
+    margin-bottom: 60px; 
   }
 
   .counter{
@@ -77,16 +81,24 @@
 
   .itemSearch{
     order: 2;
-    width: 30%;
   }
 
   .searchSelect{
     order: 3;
-    width: 40%;
+    position: absolute;
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+
+    Select {
+      width: 25%;
+    }
   }
 
   .itemButton{
     order: 4;
+    margin-left: 10px;
   }
 }
 
@@ -102,18 +114,7 @@
     margin-right: 3%;
   }
 
-  .searchSelect{
-    order: 3;
-    position: absolute;
-    margin-top: 50px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: baseline;
-
-    Select {
-      width: 25%;
-    }
-  }
+ 
 
   .itemButton{
     position: absolute;

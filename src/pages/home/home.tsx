@@ -1,7 +1,5 @@
 import React, { useState }                      from "react";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import type { MenuProps }                       from "antd";
-import { Avatar, Space }                        from "antd";
 import { Layout, Button, Menu, theme }          from "antd";
 import AppBar                                   from "@mui/material/AppBar";
 import Box                                      from "@mui/material/Box";
@@ -16,8 +14,7 @@ import { RegistrarCajaOBanco }                  from "../../hooks/RegistrarCajaO
 import { RegistrarIngresosFuturos }             from "../../hooks/RegistrarIngresosFuturos";
 import { RegistrarEgresosFuturos }              from "../../hooks/RegistrarEgresos";
 import { CerrarSesion }                         from '../../cerrarSesion';
-import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
+import MenuBookOutlinedIcon                     from '@mui/icons-material/MenuBookOutlined';
 
 const drawerWidth = 250;
 
@@ -44,7 +41,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Resumen", "1", <div className={style.container}><MenuBookOutlinedIcon className={style.iconMenu}/></div>),
+  getItem("Resumen", "1", <span className={style.container}><MenuBookOutlinedIcon className={style.iconMenu}/></span>),
   getItem(
     "Registrar caja o banco",
     "2",

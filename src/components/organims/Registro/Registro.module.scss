@@ -14,17 +14,21 @@
   margin-right: 10px;
 }
 
+
 .RegistroBtnSiguiente {
   height: 32px !important;
-  color: $default-color;
+  color: #fff;
   font-size: 13px;
   line-height: 13px;
   font-weight: 500;
-  background: $main-color;
+  background: #00C62F;
   border: 0px;
   margin-bottom: 0px !important;
   padding: 0px 11px;
   margin-top: -8px;
+}
+
+.RegistroBtnSiguiente:hover {
   cursor: pointer;
-  background: $main-color;
+  background: #00df35;
 }
