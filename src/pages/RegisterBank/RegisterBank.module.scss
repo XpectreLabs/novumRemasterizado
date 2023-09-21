@@ -87,7 +87,7 @@
   display: flex;
   margin: 15px 15px 20px 15px;
   align-items: baseline;
-  justify-content: space-between;
+  //justify-content: space-between;
 }
 
 .counter{
@@ -109,8 +109,7 @@
 .btn{
   display: flex;
   justify-content: flex-end;
-  margin-top: -15px;
-  margin-left: -12px;
+  margin-top: -51px;
   width: 100%;
 }
 
@@ -121,13 +120,36 @@
   justify-content: space-between;
 }
 
-@media all and (max-width: 1107px){
-  .btn{
+@media all and (max-width: 1150px){
+  /*.btn{
     margin-left: -32px;
-  }
+  }*/
 
   .navChips{
     margin-top: 50px;
+  }
+
+  .nav{
+    width: 80%;
+  }
+}
+
+@media all and (max-width: 1000px){
+  .nav{
+    width: 100%;
+    justify-content: space-evenly;
+  }
+
+  .btn{
+    margin-top: -15px;
+  }
+}
+
+@media all and (max-width: 800px){
+  .itemButton{
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
   }
 }
 
@@ -138,13 +160,22 @@
 
   .itemSearch{
     position: absolute;
-    margin-top: 50px;
-    width: -moz-available;
+    margin: 50px 0px 0px -5px;
+    width: 90%;
   }
 
   .navChips{
     margin-top: 70px;
   }
+
+  .nav{
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .itemButton{
+    width: 40%;
+   }
 }
 
 @media all and (max-width: 500px){
@@ -152,4 +183,10 @@
     flex-wrap: wrap;
     margin-left: 40px;
   }
+}
+
+@media all and (max-width: 400px){
+  .itemButton{
+    width: 55%;
+   }
 }

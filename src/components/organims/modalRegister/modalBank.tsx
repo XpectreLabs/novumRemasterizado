@@ -277,7 +277,7 @@ export const ModalBank = ({
                         root: Styles.btnCreateAccount,
                       }}
                       onClick   = {showModal}
-                      sx        = {{cursor: 'pointer'}}
+                      sx        = {{cursor: 'pointer', textTransform: 'initial'}}
                     >
                       {text}
                     </Button>

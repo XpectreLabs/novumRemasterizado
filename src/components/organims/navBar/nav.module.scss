@@ -149,11 +149,6 @@
   .itemSearch{
     margin-right: 13%;
   }
-
-  .searchSelect Select{
-    
-    
-  }
 }
 
 @media all and (max-width: 550px){
@@ -187,7 +182,12 @@
 
   .searchSelect{
     flex-grow: 2;
-    width: inherit;
+    width: 100%;
+    margin-left: -12px;
+
+    Select{
+      width: 25%;
+    }
   }
 
   .itemButton{

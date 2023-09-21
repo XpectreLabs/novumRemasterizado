@@ -45,6 +45,10 @@
   color: #fff !important;
 }
 
+.ant-steps .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
+  color: #00c62f;
+}
+
 #BtnSiguiente, #BtnTerminar {
   display: none;
 }
@@ -276,3 +280,8 @@
 .home_mobile__EfOAy div{
   color: white;
 }
+
+.ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+  color: white;
+}
+

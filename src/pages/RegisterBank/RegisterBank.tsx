@@ -193,6 +193,7 @@ return (
           classes     = {{
             root: Styles.btnCreateAccount,
           }}
+          sx          = {{textTransform: 'initial'}}
           onClick={handleOnExcel}
         >
           Exportar a excel
