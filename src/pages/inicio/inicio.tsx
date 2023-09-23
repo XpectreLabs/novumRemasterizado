@@ -4,6 +4,7 @@ import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import { Login } from '../../components/organims/login';
 import { Registro } from '../../components/organims/Registro';
+import { RegistroForm } from '../../components/organims/RegistroForm';
 
 localStorage.setItem('site', "http://localhost:3001");
 
@@ -20,7 +21,7 @@ const items: TabsProps["items"] = [
   {
     key: "2",
     label: `Registrarse`,
-    children: <Registro />,
+    children: <RegistroForm/>, //<Registro />,
   },
 ];
 export const Inicio = () => {
