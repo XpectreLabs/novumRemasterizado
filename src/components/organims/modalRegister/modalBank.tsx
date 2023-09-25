@@ -217,83 +217,83 @@ export const ModalBank = ({
     <Box>
       <Box className={Styles.itemButton}>
         {
-          duplicar
-          ? text
-              ? <Button
+        duplicar
+        ? text
+          ? <Button
+              variant = "text"
+              classes = {{root: Styles.btnTxt}}
+              onClick = {() => {
+                duplicarItem(rowId);
+              }}
+            >
+              Duplicar
+            </Button>
+          : <ContentCopyIcon
+              onClick = {() => {
+                duplicarItem(rowId);
+              }}
+              sx={{cursor: 'pointer'}}
+            />
+        : editBank
+          ?(
+            <IconButton type="button" aria-label="Edit">
+              <EditOutlinedIcon 
+                sx      = {{cursor: 'pointer'}}
+                onClick = {() => {
+                  editarBank(rowId);
+                }}
+              />
+            </IconButton>
+          )
+          : edit
+            ? text
+              ? (
+                <Button
                   variant = "text"
                   classes = {{root: Styles.btnTxt}}
                   onClick = {() => {
-                    duplicarItem(rowId);
+                    editar(rowId);
                   }}
                 >
-                  Duplicar
+                  Editar
                 </Button>
-              : <ContentCopyIcon
-                  onClick = {() => {
-                    duplicarItem(rowId);
-                  }}
-                  sx={{cursor: 'pointer'}}
-                />
-          : editBank
-            ?(
-              <IconButton type="button" aria-label="Edit">
-                <EditOutlinedIcon 
+              )
+              : (
+                <EditIcon
                   sx      = {{cursor: 'pointer'}}
                   onClick = {() => {
-                    editarBank(rowId);
+                    editar(rowId);
                   }}
                 />
-              </IconButton>
-            )
-            : edit
-              ? text
-                  ? (
-                    <Button
-                      variant = "text"
-                      classes = {{root: Styles.btnTxt}}
-                      onClick = {() => {
-                        editar(rowId);
-                      }}
-                    >
-                      Editar
-                    </Button>
-                  )
-                  : (
-                    <EditIcon
-                      sx      = {{cursor: 'pointer'}}
-                      onClick = {() => {
-                        editar(rowId);
-                      }}
-                    />
-                  )
-              : (
-                <Box className={Styles.itemButton2}>
-                  <Box className={Styles.btnText}>
-                    <Button
-                      variant   = "contained"
-                      color     = "success"
-                      startIcon = {<AddIcon />}
-                      classes   = {{
-                        root: Styles.btnCreateAccount,
-                      }}
-                      onClick   = {showModal}
-                      sx        = {{cursor: 'pointer', textTransform: 'initial'}}
-                    >
-                      {text}
-                    </Button>
-                  </Box>
-
-                  <Box className={Styles.btnIcon}>
-                    <Icon 
-                      color   = "success"
-                      onClick = {showModal}
-                      sx      = {{cursor: 'pointer'}}
-                    >
-                      <AddIcon />
-                    </Icon>
-                  </Box>
-                </Box>
               )
+            : (
+              <Box className={Styles.itemButton2}>
+                <Box className={Styles.btnText}>
+                  <Button
+                    variant   = "contained"
+                    color     = "success"
+                    startIcon = {<AddIcon />}
+                    classes   = {{
+                      root: Styles.btnCreateAccount,
+                    }}
+                    onClick   = {showModal}
+                    sx        = {{cursor: 'pointer', textTransform: 'initial'}}
+                  >
+                    {text}
+                  </Button>
+                </Box>
+
+                <Box className={Styles.btnIcon}>
+                  <Icon 
+                    color   = "success"
+                    onClick = {showModal}
+                    sx      = {{cursor: 'pointer'}}
+                  >
+                    <AddIcon />
+                  </Icon>
+                </Box>
+              </Box>
+            )
         }
       </Box>
 
@@ -312,182 +312,182 @@ export const ModalBank = ({
           initialValues       = {initialValue}
           validationSchema={
             inputsIngresoEgreso
-              ? Yup.object().shape({
-                  txtNombre: Yup.string()
-                    .min(
-                      2,
-                      namePerson
-                        ? "El nombre de la persona o empresa es demasiado corto"
-                        : "El nombre de la cuenta es demasiado corto"
-                    )
-                    .required(
-                      namePerson
-                        ? "* Nombre de la persona o empresa"
-                        : "* Nombre de la cuenta"
-                    ),
-                  stTipo: Yup.number()
-                    .min      (1, "Efectivo o banco")
-                    .required ("* Efectivo o banco"),
-                  txtConcepto: Yup.string()
-                    .min      (3, "El concepto es demasiado corto")
-                    .required ("* Concepto"),
-                  stCategoria: Yup.number()
-                    .min      (1, "Categoria")
-                    .required ("* Categoria"),
-                  txtMonto: Yup.number()
-                    .min      (1, "Al menos un digito")
-                    .required ("* Monto"),
-                  txtFechaTentativaCobro: Yup.date().required(
-                    fechaPago
-                      ? "* Fecha tentativa de pago"
-                      : "* Fecha tentativa de cobro"
+            ? Yup.object().shape({
+                txtNombre: Yup.string()
+                  .min(
+                    2,
+                    namePerson
+                      ? "El nombre de la persona o empresa es demasiado corto"
+                      : "El nombre de la cuenta es demasiado corto"
+                  )
+                  .required(
+                    namePerson
+                      ? "* Nombre de la persona o empresa"
+                      : "* Nombre de la cuenta"
                   ),
-                })
-              : Yup.object().shape({
-                  txtNombre: Yup.string()
-                    .min(
-                      2,
-                      namePerson
-                        ? "El nombre de la persona o empresa es demasiado corto"
-                        : "El nombre de la cuenta es demasiado corto"
-                    )
-                    .required(
-                      namePerson
-                        ? "* Nombre de la persona o empresa"
-                        : "* Nombre de la cuenta"
-                    ),
-                  stTipo: Yup.number()
-                    .min      (1, "Efectivo o banco")
-                    .required ("* Efectivo o banco"),
-                  txtCantidadActual: Yup.number()
-                    .min      (1, "Al menos un digito")
-                    .required ("* Cantidad actual"),
-                })
+                stTipo: Yup.number()
+                  .min      (1, "Efectivo o banco")
+                  .required ("* Efectivo o banco"),
+                txtConcepto: Yup.string()
+                  .min      (3, "El concepto es demasiado corto")
+                  .required ("* Concepto"),
+                stCategoria: Yup.number()
+                  .min      (1, "Categoria")
+                  .required ("* Categoria"),
+                txtMonto: Yup.number()
+                  .min      (1, "Al menos un digito")
+                  .required ("* Monto"),
+                txtFechaTentativaCobro: Yup.date().required(
+                  fechaPago
+                    ? "* Fecha tentativa de pago"
+                    : "* Fecha tentativa de cobro"
+                ),
+              })
+            : Yup.object().shape({
+                txtNombre: Yup.string()
+                  .min(
+                    2,
+                    namePerson
+                      ? "El nombre de la persona o empresa es demasiado corto"
+                      : "El nombre de la cuenta es demasiado corto"
+                  )
+                  .required(
+                    namePerson
+                      ? "* Nombre de la persona o empresa"
+                      : "* Nombre de la cuenta"
+                  ),
+                stTipo: Yup.number()
+                  .min      (1, "Efectivo o banco")
+                  .required ("* Efectivo o banco"),
+                txtCantidadActual: Yup.number()
+                  .min      (1, "Al menos un digito")
+                  .required ("* Cantidad actual"),
+              })
           }
           onSubmit={
             inputsIngresoEgreso
-              ? (values, actions) => {
-                  let scriptURL = 
-                    edit 
-                    ? saveDataEgreso
-                      ? localStorage.getItem('site') + "/editarEgresoFuturo"
-                      : localStorage.getItem("site") + "/editarIngresoFuturo"
-                    
-                    : saveDataEgreso
-                      ? localStorage.getItem('site') + "/altaEgresoFuturo"
-                      : localStorage.getItem("site") + "/altaIngresoFuturo"
-
-                  const txtNombre               = values.txtNombre;
-                  const txtConcepto             = values.txtConcepto;
-                  const stTipo                  = values.stTipo;
-                  const stCategoria             = values.stCategoria;
-                  const txtMonto                = values.txtMonto;
-                  const txtFechaTentativaCobro  = new Date(values.txtFechaTentativaCobro).toISOString();
-                  const txtFechaTentativaPago   = new Date(values.txtFechaTentativaCobro).toISOString();
-                  const ingresos_futuros_id     = values.hdId;
-                  const egresos_futuros_id      = values.hdId;
+            ? (values, actions) => {
+                let scriptURL = 
+                  edit 
+                  ? saveDataEgreso
+                    ? localStorage.getItem('site') + "/editarEgresoFuturo"
+                    : localStorage.getItem("site") + "/editarIngresoFuturo"
                   
-                  const dataC = {
-                    txtNombre,
-                    txtConcepto,
-                    stTipo,
-                    stCategoria,
-                    txtMonto,
-                    user_id,
-                    txtFechaTentativaCobro,
-                    ingresos_futuros_id,
-                  };
+                  : saveDataEgreso
+                    ? localStorage.getItem('site') + "/altaEgresoFuturo"
+                    : localStorage.getItem("site") + "/altaIngresoFuturo"
 
-                  const dataP = {
-                    txtNombre,
-                    txtConcepto,
-                    stTipo,
-                    stCategoria,
-                    txtMonto,
-                    user_id,
-                    txtFechaTentativaPago,
-                    egresos_futuros_id,
-                  };
+                const txtNombre               = values.txtNombre;
+                const txtConcepto             = values.txtConcepto;
+                const stTipo                  = values.stTipo;
+                const stCategoria             = values.stCategoria;
+                const txtMonto                = values.txtMonto;
+                const txtFechaTentativaCobro  = new Date(values.txtFechaTentativaCobro).toISOString();
+                const txtFechaTentativaPago   = new Date(values.txtFechaTentativaCobro).toISOString();
+                const ingresos_futuros_id     = values.hdId;
+                const egresos_futuros_id      = values.hdId;
+                
+                const dataC = {
+                  txtNombre,
+                  txtConcepto,
+                  stTipo,
+                  stCategoria,
+                  txtMonto,
+                  user_id,
+                  txtFechaTentativaCobro,
+                  ingresos_futuros_id,
+                };
 
-                  setConfirmLoading(true);
-                  fetch(scriptURL, {
-                    method: "POST",
-                    body:   JSON.stringify(saveDataEgreso ? dataP : dataC),
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                  })
-                    .then((response) => {
-                      messageApi.open({
-                        type:     "success",
-                        content:  "Los datos del ingreso fueron guardados con éxito",
-                      });
-                      console.log("Si");
+                const dataP = {
+                  txtNombre,
+                  txtConcepto,
+                  stTipo,
+                  stCategoria,
+                  txtMonto,
+                  user_id,
+                  txtFechaTentativaPago,
+                  egresos_futuros_id,
+                };
 
-                      cargarDatos(
-                        false,
-                        setListaDatos,
-                        true,
-                        setInitialValuesTabla,
-                        setOpen,
-                        setConfirmLoading
-                      );
-                      setValue('');
-                    })
-                    .catch((error) => {
-                      console.log(error.message);
-                      console.error("Error!", error.message);
+                setConfirmLoading(true);
+                fetch(scriptURL, {
+                  method: "POST",
+                  body:   JSON.stringify(saveDataEgreso ? dataP : dataC),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                })
+                  .then((response) => {
+                    messageApi.open({
+                      type:     "success",
+                      content:  "Los datos del ingreso fueron guardados con éxito",
                     });
-                }
-              : (values, actions) => {
-                  let scriptURL = 
-                    edit 
-                    ? localStorage.getItem("site") + "/editarCajaBanco"
-                    : localStorage.getItem("site") + "/altaCajaBanco"
+                    console.log("Si");
 
-                  const txtNombre         = values.txtNombre;
-                  const stTipo            = values.stTipo;
-                  const txtCantidadActual = values.txtCantidadActual;
-                  const caja_banco_id     = values.hdId;
-
-                  const dataU = {
-                    txtNombre,
-                    stTipo,
-                    txtCantidadActual,
-                    user_id,
-                    caja_banco_id,
-                  };
-
-                  setConfirmLoading(true);
-                  fetch(scriptURL, {
-                    method: "POST",
-                    body:   JSON.stringify(dataU),
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
+                    cargarDatos(
+                      false,
+                      setListaDatos,
+                      true,
+                      setInitialValuesTabla,
+                      setOpen,
+                      setConfirmLoading
+                    );
+                    setValue('');
                   })
-                    .then((response) => {
-                      messageApi.open({
-                        type:     "success",
-                        content:  "Los datos fueron guardados con éxito",
-                      });
-                      console.log("Si caja");
+                  .catch((error) => {
+                    console.log(error.message);
+                    console.error("Error!", error.message);
+                  });
+              }
+            : (values, actions) => {
+                let scriptURL = 
+                  edit 
+                  ? localStorage.getItem("site") + "/editarCajaBanco"
+                  : localStorage.getItem("site") + "/altaCajaBanco"
 
-                      cargarDatos(
-                        false,
-                        setListaDatos,
-                        true,
-                        setInitialValuesCaja,
-                        setOpen,
-                        setConfirmLoading
-                      );
-                      setValue('');
-                    })
-                    .catch((error) => {
-                      console.log(error.message);
-                      console.error("Error!", error.message);
+                const txtNombre         = values.txtNombre;
+                const stTipo            = values.stTipo;
+                const txtCantidadActual = values.txtCantidadActual;
+                const caja_banco_id     = values.hdId;
+
+                const dataU = {
+                  txtNombre,
+                  stTipo,
+                  txtCantidadActual,
+                  user_id,
+                  caja_banco_id,
+                };
+
+                setConfirmLoading(true);
+                fetch(scriptURL, {
+                  method: "POST",
+                  body:   JSON.stringify(dataU),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                })
+                  .then((response) => {
+                    messageApi.open({
+                      type:     "success",
+                      content:  "Los datos fueron guardados con éxito",
                     });
-                }
+                    console.log("Si caja");
+
+                    cargarDatos(
+                      false,
+                      setListaDatos,
+                      true,
+                      setInitialValuesCaja,
+                      setOpen,
+                      setConfirmLoading
+                    );
+                    setValue('');
+                  })
+                  .catch((error) => {
+                    console.log(error.message);
+                    console.error("Error!", error.message);
+                  });
+              }
           }
         >
           {({ handleBlur, handleChange, handleSubmit, errors, values }) => {

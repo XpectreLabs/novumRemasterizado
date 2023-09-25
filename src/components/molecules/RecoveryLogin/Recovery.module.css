@@ -1,0 +1,66 @@
+.Login {
+  font: 13px 'Readex Pro', sans-serif;
+  line-height: 13px;
+  font-weight: 400px;
+  position: relative;
+}
+
+.LoginBarra {
+  font-size: 87px;
+  left: 11px;
+  top: 210px;
+}
+
+.LoginCenter {
+  width: 414px;
+  font-size: 12px;
+  padding-top: 100px;
+}
+
+.LoginLogo {
+  margin-bottom: 14px;
+}
+
+.LoginLogo span {
+  font-size: 39px;
+}
+
+input {
+  height: 26px;
+  font: 13px 'Readex Pro', sans-serif;
+  line-height: 13px;
+  margin-bottom: 12px;
+  padding-top: 5.5px;
+  padding-bottom: 5.5px;
+}
+
+.boxInput{
+  margin-top: 20px;
+}
+
+.inputCss{
+  width: 400px;
+}
+
+.inputCss fieldset{
+  border-color: #00C62F !important;
+}
+
+.btnCss{
+  background: #00C62F !important;
+  text-transform: full-size-kana !important;
+  float: right !important;
+  font-weight: bold !important;
+}
+
+.boxInput button{
+  margin: 15px 8px 0px 8px;
+}
+
+.btnBack{
+  color: #00C62F;
+  float: left;
+  margin: 24px 0px 0px 8px;
+}
+
+/*  background: #00C62F; */

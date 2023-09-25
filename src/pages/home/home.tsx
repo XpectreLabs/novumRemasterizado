@@ -69,6 +69,37 @@ export const Home = (props: any) => {
   const [cajaActive,    setCajaActive]    = React.useState(true);
   const [ingresoActive, setIngresoActive] = React.useState(true);
 
+  const user_id = localStorage.getItem('user_id');
+
+  if(localStorage.getItem('user_id')===''||localStorage.getItem('user_id')===null)
+  location.href = '/';
+
+function verificar() {
+  let scriptURL = localStorage.getItem('site')+"/todos";
+  let dataUrl = {user_id};
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify(dataUrl),
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  })
+  .then((resp) => resp.json())
+  .then(function(info) {
+    info['caja']!==0||info['ingreso']!==0||info['egreso']!==0?setResumenActive(true):setResumenActive(false);
+    info['caja']===0?setCajaActive(false):setCajaActive(true);
+    info['ingreso']===0?setIngresoActive(false):setIngresoActive(true);
+    info['egreso']===0?setEgresoActive(false):setEgresoActive(true);
+  })
+  .catch(error => {
+    console.log(error.message);
+    console.error('Error!', error.message);
+  });
+}
+
+verificar();
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
