@@ -1,4 +1,4 @@
-import React, { useState }                      from "react";
+import React, { useState, useEffect }           from "react";
 import type { MenuProps }                       from "antd";
 import { Layout, Button, Menu, theme }          from "antd";
 import AppBar                                   from "@mui/material/AppBar";
@@ -16,6 +16,7 @@ import { RegistrarEgresosFuturos }              from "../../hooks/RegistrarEgres
 import { CerrarSesion }                         from '../../cerrarSesion';
 import MenuBookOutlinedIcon                     from '@mui/icons-material/MenuBookOutlined';
 
+
 const drawerWidth = 250;
 
 const { Header, Content, Sider } = Layout;
@@ -23,6 +24,8 @@ const { Header, Content, Sider } = Layout;
 type MenuItem = Required<MenuProps>["items"][number];
 
 const iniciales_usuario = localStorage.getItem('iniciales');
+
+const user_id = localStorage.getItem('user_id');
 
 function getItem(
   label:      React.ReactNode,
@@ -69,10 +72,10 @@ export const Home = (props: any) => {
   const [cajaActive,    setCajaActive]    = React.useState(true);
   const [ingresoActive, setIngresoActive] = React.useState(true);
 
-  const user_id = localStorage.getItem('user_id');
-
-  if(localStorage.getItem('user_id')===''||localStorage.getItem('user_id')===null)
-  location.href = '/';
+  if(localStorage.getItem('user_id')==='' || localStorage.getItem('user_id')===null){
+    alert('No se encontró ninguna sesión abierta');
+    window.location.href = '/';
+  }
 
 function verificar() {
   let scriptURL = localStorage.getItem('site')+"/todos";
