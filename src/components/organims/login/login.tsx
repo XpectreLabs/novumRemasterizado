@@ -115,7 +115,7 @@ export const Login = () => {
 
               <div className="u-textLeft">
                 <Link
-                  to="/Recovery-pass"
+                  to="/recovery"
                   className={`${style.LoginTextOlvido} u-inline-block`}
                 >
                   ¿Olvido su contraseña?

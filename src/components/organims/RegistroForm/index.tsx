@@ -1,0 +1,1 @@
+export { RegistroForm } from './registroForm';

@@ -1,7 +1,5 @@
-import React, { useState }                      from "react";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import React, { useState, useEffect }           from "react";
 import type { MenuProps }                       from "antd";
-import { Avatar, Space }                        from "antd";
 import { Layout, Button, Menu, theme }          from "antd";
 import AppBar                                   from "@mui/material/AppBar";
 import Box                                      from "@mui/material/Box";
@@ -16,8 +14,8 @@ import { RegistrarCajaOBanco }                  from "../../hooks/RegistrarCajaO
 import { RegistrarIngresosFuturos }             from "../../hooks/RegistrarIngresosFuturos";
 import { RegistrarEgresosFuturos }              from "../../hooks/RegistrarEgresos";
 import { CerrarSesion }                         from '../../cerrarSesion';
-import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
+import MenuBookOutlinedIcon                     from '@mui/icons-material/MenuBookOutlined';
+
 
 const drawerWidth = 250;
 
@@ -26,6 +24,8 @@ const { Header, Content, Sider } = Layout;
 type MenuItem = Required<MenuProps>["items"][number];
 
 const iniciales_usuario = localStorage.getItem('iniciales');
+
+const user_id = localStorage.getItem('user_id');
 
 function getItem(
   label:      React.ReactNode,
@@ -44,7 +44,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Resumen", "1", <div className={style.container}><MenuBookOutlinedIcon className={style.iconMenu}/></div>),
+  getItem("Resumen", "1", <span className={style.container}><MenuBookOutlinedIcon className={style.iconMenu}/></span>),
   getItem(
     "Registrar caja o banco",
     "2",
@@ -71,6 +71,37 @@ export const Home = (props: any) => {
   const [resumenActive, setResumenActive] = React.useState(false);
   const [cajaActive,    setCajaActive]    = React.useState(true);
   const [ingresoActive, setIngresoActive] = React.useState(true);
+
+  if (user_id === '' || user_id === null) {
+    console.log('No se encontró ninguna sesión abierta');
+    //window.location.href ='/';
+  }
+
+  function verificar() {
+    let scriptURL = localStorage.getItem('site')+"/todos";
+    let dataUrl = {user_id};
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: JSON.stringify(dataUrl),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((resp) => resp.json())
+    .then(function(info) {
+      info['caja']!==0||info['ingreso']!==0||info['egreso']!==0?setResumenActive(true):setResumenActive(false);
+      info['caja']===0?setCajaActive(false):setCajaActive(true);
+      info['ingreso']===0?setIngresoActive(false):setIngresoActive(true);
+      info['egreso']===0?setEgresoActive(false):setEgresoActive(true);
+    })
+    .catch(error => {
+      console.log(error.message);
+      console.error('Error!', error.message);
+    });
+  }
+
+  verificar();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);

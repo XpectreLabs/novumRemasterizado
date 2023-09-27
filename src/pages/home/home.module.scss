@@ -123,6 +123,15 @@
   transition: all 300ms ease-out;
 }
 
+.iconMenu{
+  font-size: 19px !important;
+  position: absolute;
+}
+
+.container{
+  margin-right: 6px;
+}
+
 @media all and (max-width: 1300px){
   .TablaResumen div {
     gap: 10px;
@@ -174,16 +183,3 @@
     display: block !important;
   }
 }
-
-.iconMenu{
-  font-size: 19px !important;
-}
-
-.container{
-  position: absolute;
-  top: 50%;
-  //left: 17%;
-  width: 1%;
-  padding-left: 6px;
-  transform: translate(-50%, -50%);
- }
