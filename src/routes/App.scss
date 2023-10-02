@@ -97,6 +97,35 @@
   text-align: left !important;
 }
 
+.intl-tel-input input::-webkit-input-placeholder
+{
+ 	color: #adadad;
+}
+
+.intl-tel-input input::-o-input-placeholder
+{
+ 	color: #adadad;
+}
+
+.intl-tel-input input::-ms-input-placeholder
+{
+ 	color: #adadad;
+}
+
+.intl-tel-input input:-moz-input-placeholder
+{
+ 	color: #adadad;
+}
+
+.intl-tel-input input::-moz-input-placeholder
+{
+ 	color: #adadad;
+}
+
+.intl-tel-input input:focus-visible {
+  outline: 0px !important;
+}
+
 .ant-btn-default {
   //display: none !important;
 }
@@ -284,4 +313,3 @@
 .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
   color: white;
 }
-
