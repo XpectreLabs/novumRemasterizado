@@ -16,7 +16,6 @@ import { RegistrarEgresosFuturos }              from "../../hooks/RegistrarEgres
 import { CerrarSesion }                         from '../../cerrarSesion';
 import MenuBookOutlinedIcon                     from '@mui/icons-material/MenuBookOutlined';
 
-
 const drawerWidth = 250;
 
 const { Header, Content, Sider } = Layout;
@@ -63,7 +62,7 @@ const items: MenuItem[] = [
 ];
 
 export const Home = (props: any) => {
-  const { window }                        = props;
+  const { window1 }                       = props;
   const [mobileOpen,    setMobileOpen]    = React.useState(false);
   const [egresoActive,  setEgresoActive]  = React.useState(true);
   const [collapsed,     setCollapsed]     = useState(false);
@@ -72,10 +71,26 @@ export const Home = (props: any) => {
   const [cajaActive,    setCajaActive]    = React.useState(true);
   const [ingresoActive, setIngresoActive] = React.useState(true);
 
-  if (user_id === '' || user_id === null) {
+  if (user_id == '' || user_id == null) {
     console.log('No se encontró ninguna sesión abierta');
-    //window.location.href ='/';
+    window.location.href ='/';
   }
+
+ /*const loader = async () => {
+    const user = await localStorage.getItem('user_id');
+    if (user === "" || user === null || !user ) {
+      return redirect("/");
+    }
+  };
+
+  loader();*/
+
+  /*useEffect(() => {
+    if (localStorage.getItem('user_id') === '' || localStorage.getItem('user_id') === null) {
+      window.location.href = '/';
+    }
+  }, [window]);*/
+ 
 
   function verificar() {
     let scriptURL = localStorage.getItem('site')+"/todos";
@@ -108,7 +123,7 @@ export const Home = (props: any) => {
   };
 
   const container =
-    window !== undefined ? () => window().document.body : undefined;
+    window1 !== undefined ? () => window1().document.body : undefined;
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
