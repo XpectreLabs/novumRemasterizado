@@ -11,9 +11,11 @@ import fn                         from "../../../utility";
 import type { RangePickerProps }  from 'antd/es/date-picker';
 import DeleteIcon                 from '@mui/icons-material/Delete';
 import Button                     from '@mui/material/Button';
+import DeleteForeverIcon          from '@mui/icons-material/DeleteForever';
 import { CloseOutlined }          from '@mui/icons-material';
+import IconButton                 from '@mui/material/IconButton';
 
-let fecha_creacion_o_m: string;
+let fecha_creacion_o_m: any;
 
 export const ModalTB = ({
   text,
@@ -28,6 +30,7 @@ export const ModalTB = ({
   setConfirm2Loading,
   cargarDatosEgresos,
   cancelar,
+  cajaBanco,
 }:{
   text:                 boolean;
   ingreso:              boolean;
@@ -41,15 +44,18 @@ export const ModalTB = ({
   setConfirm2Loading:   any;
   cargarDatosEgresos:   Function;
   cancelar:             boolean;
+  cajaBanco:            boolean;
  
 }) => {
   const [modal2Open,              setModal2Open]              = useState(false);
   const [modal3Open,              setModal3Open]              = useState(false);
   const [modal4Open,              setModal4Open]              = useState(false);
+  const [modal5Open,              setModal5Open]              = useState(false);
   const [confirm3Loading,         setConfirm3Loading]         = useState(false);
   const [confirm4Loading,         setConfirm4Loading]         = useState(false);
   const [idIngresoStatus,         setIdIngresoStatus]         = useState("0");
   const [idEgresoStatus,          setIdEgresoStatus]          = useState("0");
+  const [idCajaBanco,             setIdCajaBanco]          = useState("0");
   const [cobrado,                 setCobrado]                 = useState(false);
   const [pagado,                  setPagado]                  = useState(false);
   const [ocultarFechaRealizo,     setOcultarFechaRealizo]     = useState(true);
@@ -121,7 +127,7 @@ export const ModalTB = ({
     setModal2Open(true);
     setValueFechaRealizoCobro('');
     setOcultarFechaRealizo(true);
-    //fecha_creacion_o_m = fecha_c_o.slice(0, 10);
+    fecha_creacion_o_m = fecha_c_o.slice(0, 10);
 
     setTimeout(()=>{
       setIdIngresoStatus(id);
@@ -196,7 +202,7 @@ export const ModalTB = ({
     setModal2Open(true);
     setValueFechaRealizoCobro('');
     setOcultarFechaRealizo(true);
-    //fecha_creacion_o_m = fecha_c_o.slice(0, 10);
+    fecha_creacion_o_m = fecha_c_o.slice(0, 10);
 
     setTimeout(()=>{
       setIdEgresoStatus(id);
@@ -270,7 +276,7 @@ export const ModalTB = ({
 
   const onChange2: DatePickerProps['onChange'] = (date, dateString) => {
     if((Date.parse(dateString) >= Date.parse(fecha_creacion_o_m)))
-      setValueFechaRealizoCobro(Date.parse(dateString));
+      setValueFechaRealizoCobro(dayjs(dateString));
     else
       alert("La fecha no puede ser mayor a la fecha de creación");
   };
@@ -337,6 +343,40 @@ export const ModalTB = ({
     });
   }
 
+  /*##################################*/
+
+  const showModalCB = (id: string) => {
+    setModal5Open(true);
+    setTimeout(()=>{
+      setIdCajaBanco(id);
+    },500);
+  };
+
+  const eliminarCB = () => {
+    const scriptURL     = localStorage.getItem("site") + "/eliminarIngresoFuturo";
+    const caja_banco_id = idCajaBanco;
+    const dataU         = { caja_banco_id };
+console.log(caja_banco_id)
+    /*setConfirm3Loading(true);
+    fetch(scriptURL, {
+      method: "POST",
+      body:   JSON.stringify(dataU),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => resp.json())
+      .then(function (info) {
+        //fn.ejecutarClick("#btnBuscar");
+        setModal3Open(false);
+        setConfirm3Loading(false);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        console.error('Error!', error.message);
+      });*/
+  };
+
   return(
     <Box>
       { cancelar
@@ -346,7 +386,11 @@ export const ModalTB = ({
             className = "u-efecto slideRight u-marginR-5" 
           />
         : eliminar
-          ? text
+          ? cajaBanco
+            ? <IconButton type="button" aria-label="Eliminar" onClick = {()=>{showModalCB(id)}}>
+                <DeleteForeverIcon />
+              </IconButton>   
+            : text
             ? (
               <Button
                 variant = "text"
@@ -624,6 +668,31 @@ export const ModalTB = ({
                 : <strong>¿Desea cancelar este pago?  </strong>
             }
           </p>
+        </form>
+      </Modal>
+
+      <Modal
+        width         = {340}
+        title         = ""
+        centered
+        open          = {modal5Open}
+        onOk          = {eliminarCB}
+        onCancel      = {() => setModal5Open(false)}
+        okText        = {"Eliminar"}
+        cancelText    = "Cancelar"
+        className     = {`${Styles.ModalCobrar} u-textCenter`}
+        confirmLoading= {confirm3Loading}
+        maskClosable  = {false}
+      >
+        <form
+          className = {Styles.ModalForm}
+          name      = "formEliminar"
+          id        = "formEliminar"
+          method    = "post"
+        >
+          <input type="hidden" name="idCB"  id="idCB" value={idCajaBanco} />
+
+          <p><strong>¿Desea eliminar este registro?</strong></p>
         </form>
       </Modal>
 

@@ -120,6 +120,14 @@
   justify-content: space-between;
 }
 
+.bScroll{
+  height: 75vh;
+  margin-top: 10px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 100%;
+}
+
 @media all and (max-width: 1150px){
   /*.btn{
     margin-left: -32px;

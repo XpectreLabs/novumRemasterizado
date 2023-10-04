@@ -313,3 +313,9 @@
 .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
   color: white;
 }
+
+.ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+  transition: none;
+  pointer-events: none;
+  color: black;
+}

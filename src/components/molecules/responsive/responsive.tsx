@@ -193,6 +193,7 @@ export const ResponsiveDesing = ({
                             setConfirm2Loading  = {setConfirm2Loading}
                             cargarDatosEgresos  = {cargarDatosEgresos}
                             cancelar            = {false}
+                            cajaBanco           = {false}
                           />
                         </div>
                       )
@@ -243,6 +244,7 @@ export const ResponsiveDesing = ({
                             setConfirm2Loading  = {setConfirm2Loading}
                             cargarDatosEgresos  = {cargarDatosEgresos}
                             cancelar            = {false}
+                            cajaBanco           = {false}
                           />
                         </div>
                       )

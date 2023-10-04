@@ -1,9 +1,9 @@
 import React, { FC }  from "react";
 import Box            from "@mui/material/Box";
 import Styles         from "../../../pages/RegisterBank/RegisterBank.module.scss";
-import IconButton     from "@mui/material/IconButton";
 import MoreVertIcon   from "@mui/icons-material/MoreVert";
 import { ModalBank }  from '../../organims/modalRegister';
+import { ModalTB }    from '../../organims/modalTable';
 
 export const DataBank = ({
   arrays,
@@ -94,9 +94,21 @@ export const DataBank = ({
                     setListaDatos       = {setListaDatos}
                     duplicar            = {false}
                   />
-                  <IconButton type="button" aria-label="Edit">
-                    <MoreVertIcon />
-                  </IconButton>
+                  <ModalTB
+                    text                = {false}
+                    ingreso             = {false}
+                    eliminar            = {true}
+                    cobradoPagado       = {false}
+                    id                  = {item.id}
+                    date_created_o      = {''}
+                    cargarDatosIngresos = {cargarDatos}
+                    setListaDatos       = {setListaDatos}
+                    confirm2Loading     = {''}
+                    setConfirm2Loading  = {''}
+                    cargarDatosEgresos  = {()=>{}}
+                    cancelar            = {false}
+                    cajaBanco           = {true}
+                  />
                 </div>
               </Box>
               <Box className={Styles.bankInfo}>

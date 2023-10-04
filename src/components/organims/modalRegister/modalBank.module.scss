@@ -47,18 +47,29 @@
 }
 
 .ModalDate {
-  width: 215px;
+  width: 230px;
   color: $black-color;
   height: 28px;
   border-radius: 5px;
   border: 1px solid $grayWhite-color;
   color: $gray-color;
-  margin-left: 8px;
+}
+
+.ModalDate2 {
+  width: 210px;
+  color: $black-color;
+  height: auto;
+  border-radius: 5px;
+  border: 1px solid $grayWhite-color;
+  color: $gray-color;
   padding-left: 10px;
+  padding-right: 10px;
+  cursor: text;
 }
 
 .ModalCantidadMr {
   margin-right: 8px !important;
+  width: 230px;
 }
 
 .ModalCantidad input {
@@ -92,6 +103,7 @@
   height: 32px;
   margin-bottom: 12px;
   text-align: initial;
+  color: $black-color !important;
 }
 
 @media all and (max-width: 1107px){

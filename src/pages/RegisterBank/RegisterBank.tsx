@@ -29,13 +29,9 @@ interface IDataSaldo {
 let listData: IData[];
 let data: any;
 const user_id = localStorage.getItem('user_id');
+let listSaldo: []; 
+var saldoTotal = -1;
 
-export const TableRegistrarCajaOBanco = () => {
-const [cargandoVisible, setCargandoVisible] = useState(true);   
-const [cantidadV,       setCantidadV]       = useState<number>(0);
-const [listaDatos,      setListaDatos]      = useState([]);
-const [listSaldo,       setListSaldo]       = useState([]);
-const [saldoTotal,      setSaldoTotal]      = useState(-1);
 
 async function cargarDatos (
   buscar?:                    boolean,
@@ -44,6 +40,8 @@ async function cargarDatos (
   setInitialValuesCaja?:      any,
   setOpen?:                   any,
   setConfirmLoading?:         any,
+  setCargandoVisible?:        any,
+  
 ) {
   let scriptURL = localStorage.getItem('site')+"/listCajasBancos";
   let dataUrl;
@@ -110,13 +108,13 @@ async function cargarDatos (
   .then((resp) => resp.json())
   .then(function(info) {
     info['dataCajasBancos'].pop()
-    setListSaldo(info['dataCajasBancos']);
+    listSaldo = info['dataCajasBancos'];
 
     let saldTot = 0;
     for(let j   = 0; j < info['dataCajasBancos'].length; j++) {
       saldTot   += parseInt(info['dataCajasBancos'][j]['total'].slice(0,-3).replace('$','').replaceAll(',',''));
     }
-    setSaldoTotal(saldTot);
+    saldoTotal = saldTot;
   })
   .catch(error => {
     console.log(error.message);
@@ -127,6 +125,11 @@ async function cargarDatos (
 if(user_id!==""&&user_id!==null) {
   cargarDatos();
 }
+
+export const TableRegistrarCajaOBanco = () => {
+const [cargandoVisible, setCargandoVisible] = useState(true);   
+const [cantidadV,       setCantidadV]       = useState<number>(0);
+const [listaDatos,      setListaDatos]      = useState([]);
 
 let idSI = setInterval(() => {
   if (!data) console.log("Vacio");
@@ -241,16 +244,18 @@ return (
       ) : null}
     </Box>
 
-    <DataBank 
-      arrays        = {listaDatos} 
-      setListaDatos = {setListaDatos} 
-      cargarDatos   = {cargarDatos}
-    />
-   
-    <Box
-      className = {cargandoVisible ? "u-textCenter" : "u-textCenter u-ocultar"}
-    >
-      <CircularProgress />
+    <Box className={Styles.bScroll}>
+      <DataBank 
+        arrays        = {listaDatos} 
+        setListaDatos = {setListaDatos} 
+        cargarDatos   = {cargarDatos}
+      />  
+
+      <Box
+        className = {cargandoVisible ? "u-textCenter" : "u-textCenter u-ocultar"}
+      >
+        <CircularProgress />
+      </Box>
     </Box>
   </Box>
 );
