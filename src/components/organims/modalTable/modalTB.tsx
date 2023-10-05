@@ -66,7 +66,7 @@ export const ModalTB = ({
     const scriptURL           = localStorage.getItem('site')+"/cambiarCobrado"; // deberia es
     const ingresos_futuros_id = idIngresoStatus;
     const tipoFecha           = fn.obtenerValorRadio("rdRealizoCobro");
-    const fechaRealizo        = fn.obtenerValor("#txtFechaRealizoCobro");
+    const fechaRealizo        = fn.obtenerValor("#txtFechaRealizoCobro") + 'T00:00:00.000Z';
     const dataU               = {ingresos_futuros_id, tipoFecha,fechaRealizo};
     setConfirm2Loading(true)
     fetch(scriptURL, {
