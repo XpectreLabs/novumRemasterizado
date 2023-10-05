@@ -74,6 +74,13 @@ function obtenerData(info:any):object {
     const fechaCobro                = fn.convertirFecha(info['listIngresosFuturos'][j]['fecha_tentativa_cobro']);
     const fechaEnQueSeCobro         = fn.convertirFecha(info['listIngresosFuturos'][j]['fecha_cobro']);
     const state = fechaEnQueSeCobro ==="Pendiente"?'No cobrado':'Cobrado';
+    let validarRetraso=false;
+    let textRetraso="";
+
+    if(fechaEnQueSeCobro==="Pendiente"){
+      validarRetraso  = Date.parse(new Date().toISOString()) > Date.parse(info['listIngresosFuturos'][j]['fecha_tentativa_cobro']);
+      textRetraso     = validarRetraso?" (Atrasado)":"";
+    }
 
     let item: {
       Nombre:                 string;
@@ -94,7 +101,7 @@ function obtenerData(info:any):object {
       Estado:                 state,
       FechaDeCreacion:        fechaCreacion,
       FechaTentativaDeCobro:  fechaCobro,
-      FechaEnQueSeCobro:      fechaEnQueSeCobro,
+      FechaEnQueSeCobro:      fechaEnQueSeCobro + textRetraso,
     };
     listData.push(item);
   }

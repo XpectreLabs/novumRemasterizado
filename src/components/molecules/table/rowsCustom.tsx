@@ -171,6 +171,7 @@ export const RowsCustom = ({
                                 setConfirm2Loading  = {setConfirm2Loading}
                                 cargarDatosEgresos  = {cargarDatosEgresos}
                                 cancelar            = {false}
+                                cajaBanco           = {false}
                               />
                             ) : (
                               <ModalTB
@@ -186,6 +187,7 @@ export const RowsCustom = ({
                                 setConfirm2Loading  = {setConfirm2Loading}
                                 cargarDatosEgresos  = {cargarDatosEgresos}
                                 cancelar            = {false}
+                                cajaBanco           = {false}
                               />
                             )
                         )
@@ -218,6 +220,7 @@ export const RowsCustom = ({
                             setConfirm2Loading  = {setConfirm2Loading}
                             cargarDatosEgresos  = {cargarDatosEgresos}
                             cancelar            = {false}
+                            cajaBanco           = {false}
                           />
                         ) : (
                           <ModalTB
@@ -233,6 +236,7 @@ export const RowsCustom = ({
                             setConfirm2Loading  = {setConfirm2Loading}
                             cargarDatosEgresos  = {cargarDatosEgresos}
                             cancelar            = {false}
+                            cajaBanco           = {false}
                           />
                         )
                         : (
@@ -297,6 +301,7 @@ export const RowsCustom = ({
                                 setConfirm2Loading  = {setConfirm2Loading}
                                 cargarDatosEgresos  = {cargarDatosEgresos}
                                 cancelar            = {true}
+                                cajaBanco           = {false}
                               />
                               <ModalBank
                                 namePerson          = {true}
@@ -331,6 +336,7 @@ export const RowsCustom = ({
                         setConfirm2Loading  = {setConfirm2Loading}
                         cargarDatosEgresos  = {cargarDatosEgresos}
                         cancelar            = {false}
+                        cajaBanco           = {false}
                       />
                     </div>
                   )
@@ -369,6 +375,7 @@ export const RowsCustom = ({
                                 setConfirm2Loading  = {setConfirm2Loading}
                                 cargarDatosEgresos  = {cargarDatosEgresos}
                                 cancelar            = {true}
+                                cajaBanco           = {false}
                               />
                               <ModalBank
                                 namePerson          = {true}
@@ -403,6 +410,7 @@ export const RowsCustom = ({
                         setConfirm2Loading  = {setConfirm2Loading}
                         cargarDatosEgresos  = {cargarDatosEgresos}
                         cancelar            = {false}
+                        cajaBanco           = {false}
                       />
                     </div>
                   )

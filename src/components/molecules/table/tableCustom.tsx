@@ -51,7 +51,7 @@ export const TableCustom = ({
         className={Styles.divTable}
       >
         <input type="hidden" name="hdIdIngresoFuturo" id="hdIdIngresoFuturo" />
-        <TableContainer sx={{ maxHeight: 440 }} className={Styles.table}>
+        <TableContainer sx={{ maxHeight: 500 }} className={Styles.table}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>

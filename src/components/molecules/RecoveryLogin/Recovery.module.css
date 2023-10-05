@@ -35,12 +35,17 @@ input {
 }
 
 .boxInput{
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .inputCss{
   width: 400px;
+  text-transform: initial !important;
 }
+
+/*.inputCss input{
+  height: 15px;
+}*/
 
 .inputCss fieldset{
   border-color: #00C62F !important;
@@ -48,7 +53,7 @@ input {
 
 .btnCss{
   background: #00C62F !important;
-  text-transform: full-size-kana !important;
+  text-transform: initial !important;
   float: right !important;
   font-weight: bold !important;
 }

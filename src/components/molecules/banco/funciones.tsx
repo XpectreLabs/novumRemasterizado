@@ -96,7 +96,7 @@ function obtenerData(info: any): object {
       Nombre: info["listCajasBancos"][j]["nombre_cuenta"],
       id_tipo: info["listCajasBancos"][j]["tipo_pago_id"],
       Tipo: info["listCajasBancos"][j]["tipos_pagos"]["tipo_pago"],
-      Cantidad: fn.convertirModena(
+      Cantidad: (
         info["listCajasBancos"][j]["cantidad_actual"]
       ),
       Monto: info["listCajasBancos"][j]["cantidad_actual"],

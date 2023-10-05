@@ -1,20 +1,19 @@
-import Styles                                   from "./modalBank.module.scss";
-import Box                                      from "@mui/material/Box";
-import Button                                   from "@mui/material/Button";
-import AddIcon                                  from "@mui/icons-material/Add";
-import CircularProgress                         from "@mui/material/CircularProgress";
-import EditIcon                                 from "@mui/icons-material/Edit";
-import { Formik, Form, FieldInputProps }        from "formik";
-import { Modal, message, Input, AutoComplete }  from "antd";
-import { useState }                             from "react";
-import * as Yup                                 from "yup";
-import fn                                       from "../../../utility";
-import IconButton                               from "@mui/material/IconButton";
-import EditOutlinedIcon                         from "@mui/icons-material/EditOutlined";
-import Icon                                     from '@mui/material/Icon';
-import ContentCopyIcon                          from '@mui/icons-material/ContentCopy';
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
+import Styles                                               from "./modalBank.module.scss";
+import Box                                                  from "@mui/material/Box";
+import Button                                               from "@mui/material/Button";
+import AddIcon                                              from "@mui/icons-material/Add";
+import CircularProgress                                     from "@mui/material/CircularProgress";
+import EditIcon                                             from "@mui/icons-material/Edit";
+import { Formik, Form }                                     from "formik";
+import { Modal, message, Input, AutoComplete, DatePicker }  from "antd";
+import { useState }                                         from "react";
+import * as Yup                                             from "yup";
+import fn                                                   from "../../../utility";
+import IconButton                                           from "@mui/material/IconButton";
+import EditOutlinedIcon                                     from "@mui/icons-material/EditOutlined";
+import Icon                                                 from '@mui/material/Icon';
+import ContentCopyIcon                                      from '@mui/icons-material/ContentCopy';
+import type { DatePickerProps }                             from 'antd';
 
 const user_id = localStorage.getItem("user_id");
 
@@ -55,23 +54,12 @@ export const ModalBank = ({
   const [cargandoModal,   setcargandoModal]     = useState(false);
   const [value,           setValue]             = useState<any>();
   const [listConceptos,   setListConceptos]     = useState([]);
-  const txtMonto = '';
 
   const [initialValuesCaja, setInitialValuesCaja] = useState({
     hdId:               "",
     txtNombre:          "",
     stTipo:             "",
     txtCantidadActual:  "",
-  });
-
-  const [initialValuesTabla, setInitialValuesTabla] = useState({
-    hdId:         "",
-    txtNombre:    "",
-    txtConcepto:  "",
-    stTipo:       "",
-    stCategoria:  "",
-    txtMonto:     "",
-    txtFechaTentativaCobro: ''
   });
 
   const [initialValue, setInitialValue] = useState({
@@ -85,30 +73,27 @@ export const ModalBank = ({
     txtFechaTentativaCobro: ""
   });
 
-  const [initial, setInitial] = useState({
-    txtConcepto:  "",
-  });
-
   const showModal = () => {
     cargarConceptos(setListConceptos);
     setOpen(true);
   };
 
   const handleCancel = () => {
+    
     setInitialValue({
-      hdId:               "",
-      txtNombre:          "",
-      stTipo:             "0",
-      txtCantidadActual:  "",
-      txtConcepto:        "",
-      stCategoria:        "",
-      txtMonto:           "",
-      txtFechaTentativaCobro: ''
+      hdId:                   '',
+      txtNombre:              '',
+      txtConcepto:            '',
+      stTipo:                 '',
+      txtCantidadActual:      "",
+      stCategoria:            '',
+      txtMonto:               '',
+      txtFechaTentativaCobro: '',
     });
     setTimeout(() => {
       setOpen(false);
       setcargandoModal(false);
-    }, 400);
+    }, 100);
   };
 
   const validarSubmit = () => {
@@ -137,7 +122,6 @@ export const ModalBank = ({
     showModal();
     console.log(arrayData);
     const pos = fn.buscarPosicionArreglo(arrayData, id);
-
     setTimeout(() => {
       setInitialValue({
         hdId:                   id,
@@ -150,6 +134,19 @@ export const ModalBank = ({
         txtFechaTentativaCobro: arrayData[pos]["date_to_pay_o"],
       });
     }, 100);
+  };
+
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    setInitialValue({
+      hdId:                   '',
+      txtNombre:              fn.obtenerValor("#txtNombre"),
+      txtConcepto:            fn.obtenerValor("#txtConcepto"),
+      stTipo:                 fn.obtenerValor("#stTipo"),
+      txtCantidadActual:      "",
+      stCategoria:            fn.obtenerValor("#stCategoria"),
+      txtMonto:               fn.obtenerValor("#txtMonto"),
+      txtFechaTentativaCobro: fn.obtenerValor("#txtFechaTentativaCobro"),
+    });
   };
 
   const duplicarItem = (id: any) => {
@@ -428,7 +425,7 @@ export const ModalBank = ({
                       false,
                       setListaDatos,
                       true,
-                      setInitialValuesTabla,
+                      setInitialValue,
                       setOpen,
                       setConfirmLoading
                     );
@@ -606,20 +603,35 @@ export const ModalBank = ({
                         onBlur      = {handleBlur}
                       />
 
-                      <input 
-                        type      = "date" 
-                        name      = "txtFechaTentativaCobro" 
-                        id        = "txtFechaTentativaCobro"
-                        className = {Styles.ModalDate}
-                        placeholder = {
-                          fechaPago
-                            ? "Fecha tentativa de pago"
-                            : "Fecha tentativa de cobro"
-                        }
-                        value     = {values.txtFechaTentativaCobro}
-                        onChange  = {handleChange}
-                        onBlur    = {handleBlur}
-                      />
+                      {
+                        edit
+                        ? <input 
+                            type      = "date" 
+                            name      = "txtFechaTentativaCobro" 
+                            id        = "txtFechaTentativaCobro"
+                            className = {Styles.ModalDate2}
+                            placeholder = {
+                              fechaPago
+                                ? "Fecha tentativa de pago"
+                                : "Fecha tentativa de cobro"
+                            }
+                            value     = {values.txtFechaTentativaCobro}
+                            onChange  = {handleChange}
+                            onBlur    = {handleBlur}
+                          />
+                        : <DatePicker 
+                            name        = "txtFechaTentativaCobro" 
+                            id          = "txtFechaTentativaCobro"
+                            className   = {Styles.ModalDate}
+                            placeholder = {
+                              fechaPago
+                                ? "Fecha tentativa de pago"
+                                : "Fecha tentativa de cobro"
+                            }
+                            onChange    = {onChange}
+                            onBlur      = {handleBlur} 
+                          />
+                      }
                     </>
                   ) : null}
 
