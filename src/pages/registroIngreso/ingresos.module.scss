@@ -12,6 +12,11 @@
   padding-top:  6px !important;
 }
 
+.ModalRealizoCobro {
+  width: 100%;
+}
+
+
 /* ############### */
 
 .chipTable{
@@ -160,6 +165,17 @@
 .btnCreate{
   margin-top: 21px;
   width:      15%;
+}
+
+.RadioFechaAnterior {
+  margin-bottom: 8px;
+}
+
+.ModalLabelRealizoCobro {
+  display: inline-block;
+  margin-top: 5px;
+  vertical-align: top; 
+  padding-left: 4px;
 }
 
 @media all and (max-width: 1150px){

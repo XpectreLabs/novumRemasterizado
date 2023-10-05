@@ -66,8 +66,8 @@ export const ModalTB = ({
     const scriptURL           = localStorage.getItem('site')+"/cambiarCobrado"; // deberia es
     const ingresos_futuros_id = idIngresoStatus;
     const tipoFecha           = fn.obtenerValorRadio("rdRealizoCobro");
-    const fechaRealizo        = dayjs(fn.obtenerValor("#txtFechaRealizoCobro"));
-    const dataU               = {ingresos_futuros_id};
+    const fechaRealizo        = fn.obtenerValor("#txtFechaRealizoCobro");
+    const dataU               = {ingresos_futuros_id, tipoFecha,fechaRealizo};
     setConfirm2Loading(true)
     fetch(scriptURL, {
        method:  'POST',
@@ -127,7 +127,7 @@ export const ModalTB = ({
     setModal2Open(true);
     setValueFechaRealizoCobro('');
     setOcultarFechaRealizo(true);
-    fecha_creacion_o_m = fecha_c_o.slice(0, 10);
+    //fecha_creacion_o_m = fecha_c_o.slice(0, 10);
 
     setTimeout(()=>{
       setIdIngresoStatus(id);
@@ -202,7 +202,7 @@ export const ModalTB = ({
     setModal2Open(true);
     setValueFechaRealizoCobro('');
     setOcultarFechaRealizo(true);
-    fecha_creacion_o_m = fecha_c_o.slice(0, 10);
+    //fecha_creacion_o_m = fecha_c_o.slice(0, 10);
 
     setTimeout(()=>{
       setIdEgresoStatus(id);
@@ -275,10 +275,12 @@ export const ModalTB = ({
   };
 
   const onChange2: DatePickerProps['onChange'] = (date, dateString) => {
-    if((Date.parse(dateString) >= Date.parse(fecha_creacion_o_m)))
+    console.log(date, dateString);
+    setValueFechaRealizoCobro(dateString);
+    /*if((Date.parse(dateString) >= Date.parse(fecha_creacion_o_m)))
       setValueFechaRealizoCobro(dayjs(dateString));
     else
-      alert("La fecha no puede ser mayor a la fecha de creación");
+      alert("La fecha no puede ser mayor a la fecha de creación");*/
   };
 
   /*##################################*/
@@ -356,7 +358,7 @@ export const ModalTB = ({
     const scriptURL     = localStorage.getItem("site") + "/eliminarIngresoFuturo";
     const caja_banco_id = idCajaBanco;
     const dataU         = { caja_banco_id };
-console.log(caja_banco_id)
+    console.log(caja_banco_id)
     /*setConfirm3Loading(true);
     fetch(scriptURL, {
       method: "POST",
@@ -561,7 +563,7 @@ console.log(caja_banco_id)
                         id            = 'txtFechaRealizoCobro'
                         name          = 'txtFechaRealizoCobro'
                         placeholder   = 'Fecha en que se realizo'
-                        value         = {valueFechaRealizoCobro}
+                        //value         = {valueFechaRealizoCobro}
                         onChange      = {onChange2}
                         disabledDate  = {disabledDate}
                       />
@@ -571,7 +573,7 @@ console.log(caja_banco_id)
               : !pagado
                   ? (
                     <div className="u-textLeft">
-                      <p className={Styles.RadioFechaAnterior}><strong>Fecha en que se realizo el pago:</strong></p>
+                      <p className={Style.RadioFechaAnterior}><strong>Fecha en que se realizo el pago:</strong></p>
                       <div>
                         <input
                           type    = "radio"
@@ -581,9 +583,9 @@ console.log(caja_banco_id)
                           checked = {ocultarFechaRealizo?true:false}
                           onClick = {()=>{setValueFechaRealizoPago(''); setOcultarFechaRealizo(true);}}
                         />
-                        <label className={Styles.ModalLabelRealizoPago} htmlFor="rdRealizoCobro1"><strong>Hoy</strong></label>
+                        <label className={Style.ModalLabelRealizoPago} htmlFor="rdRealizoCobro1"><strong>Hoy</strong></label>
                       </div>
-                      <div className={Styles.RadioFechaAnterior}>
+                      <div className={Style.RadioFechaAnterior}>
                         <input
                           type    = "radio"
                           name    = "rdRealizoCobro"
@@ -592,15 +594,15 @@ console.log(caja_banco_id)
                           checked = {ocultarFechaRealizo?false:true}
                           onClick = {()=>{setOcultarFechaRealizo(false);}}
                         />
-                        <label className={Styles.ModalLabelRealizoPago} htmlFor="rdRealizoCobro2"><strong>Fecha anterior</strong></label>
+                        <label className={Style.ModalLabelRealizoPago} htmlFor="rdRealizoCobro2"><strong>Fecha anterior</strong></label>
                       </div>
 
-                      <DatePicker
-                        className={`${Styles.ModalCantidad} ${Styles.ModalRealizoPago} ${ocultarFechaRealizo?'u-ocultar':null}`}
+                      <DatePicker 
+                        className={`${Style.ModalCantidad} ${Style.ModalRealizoPago} ${ocultarFechaRealizo?'u-ocultar':null}`}
                         id            = 'txtFechaRealizoCobro'
                         name          = 'txtFechaRealizoCobro'
                         placeholder   = 'Fecha en que se realizo'
-                        value         = {valueFechaRealizoPago}
+                        //value         = {valueFechaRealizoPago}
                         onChange      = {onChange2}
                         disabledDate  = {disabledDate}
                       />

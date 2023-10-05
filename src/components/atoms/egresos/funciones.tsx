@@ -80,6 +80,13 @@ function obtenerData(info: any): object {
       info["listEgresosFuturos"][j]["fecha_pago"]
     );
     const state = fechaEnQueSePago === "Pendiente" ? "No pagado" : "Pagado";
+    let validarRetraso=false;
+    let textRetraso="";
+
+    if(fechaEnQueSePago==="Pendiente"){
+      validarRetraso = Date.parse(new Date().toISOString()) > Date.parse(info['listEgresosFuturos'][j]['fecha_tentativa_pago']);
+      textRetraso = validarRetraso?" (Atrasado)":"";
+    }
 
     let item: {
       Nombre: string;
@@ -100,7 +107,7 @@ function obtenerData(info: any): object {
       Estado: state,
       FechaDeCreacion: fechaCreacion,
       FechaTentativaDePago: fechaPago,
-      FechaEnQueSePago: fechaEnQueSePago,
+      FechaEnQueSePago: fechaEnQueSePago + textRetraso,
     };
     listData.push(item);
   }
