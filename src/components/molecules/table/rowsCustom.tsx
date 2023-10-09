@@ -124,7 +124,7 @@ export const RowsCustom = ({
             date_created_o: any;
             textRetraso: any;
             statusBorrado: any;
-          }) => (
+          }, index: any) => (
             <TableRow
               key={data.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -145,7 +145,7 @@ export const RowsCustom = ({
                 )}
               </TableCell>
               <TableCell align="left">  {data.category}             </TableCell>
-              <TableCell align="left">  {data.name}                 </TableCell>
+              <><TableCell align="left" key={index}>  {data.name}   </TableCell></>
               <TableCell align="left">  {data.concept}              </TableCell>
               <TableCell align="left">  ${formatNumber(data.amount)}</TableCell>
               <TableCell align="left">  {data.date_to_pay}          </TableCell>
